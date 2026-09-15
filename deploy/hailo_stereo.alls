@@ -1,0 +1,60 @@
+# HailoStereo model script (.alls) for the Hailo Dataflow Compiler.
+#
+# UNVERIFIED SYNTAX. The DFC is Linux-only and is not installed on the machine
+# this was written on, so nothing here has been through the parser. Treat it as
+# a specification of the three decisions that matter, not as a file known to
+# load. Each decision is justified below and each is independently checkable.
+
+# ---------------------------------------------------------------------------
+# 1. Normalization on-chip
+# ---------------------------------------------------------------------------
+# The chip is handed raw uint8 RGB and normalizes in-network, matching
+# `normalize_in_net: true` in the original's YAML and the ImageNet statistics
+# src/data.py trains with. Both inputs need it -- a siamese tower whose two
+# branches see differently scaled data is not siamese.
+normalization_left  = normalization([123.675, 116.28, 103.53], [58.395, 57.12, 57.375], input_layer=left)
+normalization_right = normalization([123.675, 116.28, 103.53], [58.395, 57.12, 57.375], input_layer=right)
+
+# ---------------------------------------------------------------------------
+# 2. The index ramp stays at 16-bit
+# ---------------------------------------------------------------------------
+# This is the finding from src/quantize_sim.py --sensitivity. Quantized alone,
+# this layer costs +0.0242 px EPE; the next worst costs +0.0072, and every other
+# layer in the graph costs under 0.003. It is 3.4x the runner-up and ranked first
+# on all three checkpoints measured.
+#
+# Promoting it is necessary and NOT sufficient: the per-layer deltas sum to
+# ~0.05 px while the whole graph loses 0.36 px to int8, so ~85% of the damage is
+# cumulative. Expect this promotion to recover a fraction, and rely on the
+# compiler's equalization and bias correction for the rest.
+#
+# The reason is structural, not statistical. Its weights are the constants
+# [0, 1, 2, ... 23] and its output IS the disparity, so int8 rounding of those
+# weights perturbs the predicted disparity directly -- everywhere else in the
+# graph a weight error only perturbs a feature that later layers can absorb.
+#
+# It is also nearly free to promote: a 1x1 convolution, 24 input channels, 1
+# output channel, 24 MACs per pixel, 0.0% of the 14.21 GMAC budget.
+#
+# LAYER NAME MUST BE RESOLVED. The parser renames layers, so `soft_argmin_index`
+# below is a placeholder. To find the real name, parse first and look for the
+# 1x1 convolution consuming the softmax output:
+#
+#     hailo parser onnx artifacts/hailo_stereo.onnx --hw-arch hailo15h
+#     grep -B4 -A12 softmax hailo_stereo.hn
+#
+# In the ONNX it is the node `/soft_argmin/index/Conv`, weight initializer
+# `soft_argmin.index.weight`, shape (1, 24, 1, 1), values 0..23 -- unmistakable.
+quantization_param({soft_argmin_index}, precision_mode=a16_w16)
+
+# ---------------------------------------------------------------------------
+# 3. Optimization level
+# ---------------------------------------------------------------------------
+# Level 2 runs equalization and bias correction. Simulated int8 costs +24.6% EPE
+# on the KITTI model with none of that modelled (uniform int8, percentile
+# calibration), so level 2 should land below that figure -- possibly well below,
+# since most of the simulated damage is cumulative and equalization targets
+# exactly that. If measured loss on device comes out
+# materially worse than 7.6%, the calibration set is the first suspect: it is
+# currently built from SceneFlow Driving, not from the deployment domain.
+model_optimization_flavor(optimization_level=2, compression_level=0)

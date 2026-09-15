@@ -1,0 +1,1083 @@
+C:\Microchip\hailo-stereo\src\train.py:341: UserWarning: Detected call of `lr_scheduler.step()` before `optimizer.step()`. In PyTorch 1.1.0 and later, you should call them in the opposite order: `optimizer.step()` before `lr_scheduler.step()`.  Failure to do this will result in PyTorch skipping the first value of the learning rate schedule. See more details at https://pytorch.org/docs/stable/optim.html#how-to-adjust-learning-rate
+  sched.step()
+replay: 80 SceneFlow frames mixed with 160 KITTI (ratio 0.5)
+initialised strictly from runs/sceneflow_border/best.pt
+device cuda | train 240 | val 40 | crop 320x768 | batch 4
+  epoch   0 step     0/60 loss 48.4786 lr 4.00e-06
+  epoch   0 step    50/60 loss 21.7339 lr 4.19e-06
+epoch   0 | loss 20.4855 | val EPE 3.596 px | D1 31.18% | 18s (ema)
+  new best EPE 3.596 px -> runs\kitti_replay50\best.pt
+  epoch   1 step     0/60 loss 6.5295 lr 4.27e-06
+  epoch   1 step    50/60 loss 18.9417 lr 4.90e-06
+epoch   1 | loss 18.1948 | val EPE 3.576 px | D1 30.86% | 11s (ema)
+  new best EPE 3.576 px -> runs\kitti_replay50\best.pt
+  epoch   2 step     0/60 loss 22.0072 lr 5.07e-06
+  epoch   2 step    50/60 loss 18.8845 lr 6.12e-06
+epoch   2 | loss 18.8009 | val EPE 3.551 px | D1 30.55% | 11s (ema)
+  new best EPE 3.551 px -> runs\kitti_replay50\best.pt
+  epoch   3 step     0/60 loss 9.4732 lr 6.38e-06
+  epoch   3 step    50/60 loss 16.7029 lr 7.85e-06
+epoch   3 | loss 16.7754 | val EPE 3.520 px | D1 30.26% | 12s (ema)
+  new best EPE 3.520 px -> runs\kitti_replay50\best.pt
+  epoch   4 step     0/60 loss 15.8257 lr 8.19e-06
+  epoch   4 step    50/60 loss 14.3126 lr 1.01e-05
+epoch   4 | loss 14.3834 | val EPE 3.473 px | D1 29.86% | 13s (ema)
+  new best EPE 3.473 px -> runs\kitti_replay50\best.pt
+  epoch   5 step     0/60 loss 34.5585 lr 1.05e-05
+  epoch   5 step    50/60 loss 14.9345 lr 1.27e-05
+epoch   5 | loss 14.8045 | val EPE 3.421 px | D1 29.42% | 13s (ema)
+  new best EPE 3.421 px -> runs\kitti_replay50\best.pt
+  epoch   6 step     0/60 loss 7.6634 lr 1.32e-05
+  epoch   6 step    50/60 loss 11.1555 lr 1.58e-05
+epoch   6 | loss 11.4212 | val EPE 3.352 px | D1 28.92% | 13s (ema)
+  new best EPE 3.352 px -> runs\kitti_replay50\best.pt
+  epoch   7 step     0/60 loss 4.8119 lr 1.64e-05
+  epoch   7 step    50/60 loss 9.9884 lr 1.93e-05
+epoch   7 | loss 9.6330 | val EPE 3.270 px | D1 28.36% | 12s (ema)
+  new best EPE 3.270 px -> runs\kitti_replay50\best.pt
+  epoch   8 step     0/60 loss 19.5561 lr 2.00e-05
+  epoch   8 step    50/60 loss 10.9319 lr 2.32e-05
+epoch   8 | loss 10.6323 | val EPE 3.186 px | D1 27.72% | 13s (ema)
+  new best EPE 3.186 px -> runs\kitti_replay50\best.pt
+  epoch   9 step     0/60 loss 18.1911 lr 2.39e-05
+  epoch   9 step    50/60 loss 9.6626 lr 2.74e-05
+epoch   9 | loss 9.4487 | val EPE 3.094 px | D1 26.99% | 13s (ema)
+  new best EPE 3.094 px -> runs\kitti_replay50\best.pt
+  epoch  10 step     0/60 loss 4.4311 lr 2.81e-05
+  epoch  10 step    50/60 loss 9.0394 lr 3.18e-05
+epoch  10 | loss 8.7958 | val EPE 3.004 px | D1 26.21% | 11s (ema)
+  new best EPE 3.004 px -> runs\kitti_replay50\best.pt
+  epoch  11 step     0/60 loss 5.1094 lr 3.26e-05
+  epoch  11 step    50/60 loss 7.8322 lr 3.65e-05
+epoch  11 | loss 8.0264 | val EPE 2.923 px | D1 25.44% | 10s (ema)
+  new best EPE 2.923 px -> runs\kitti_replay50\best.pt
+  epoch  12 step     0/60 loss 7.2063 lr 3.73e-05
+  epoch  12 step    50/60 loss 9.0602 lr 4.13e-05
+epoch  12 | loss 9.0452 | val EPE 2.842 px | D1 24.62% | 10s (ema)
+  new best EPE 2.842 px -> runs\kitti_replay50\best.pt
+  epoch  13 step     0/60 loss 10.2892 lr 4.21e-05
+  epoch  13 step    50/60 loss 8.1893 lr 4.63e-05
+epoch  13 | loss 8.0526 | val EPE 2.758 px | D1 23.77% | 11s (ema)
+  new best EPE 2.758 px -> runs\kitti_replay50\best.pt
+  epoch  14 step     0/60 loss 4.4915 lr 4.71e-05
+  epoch  14 step    50/60 loss 7.4861 lr 5.13e-05
+epoch  14 | loss 7.9175 | val EPE 2.683 px | D1 22.92% | 10s (ema)
+  new best EPE 2.683 px -> runs\kitti_replay50\best.pt
+  epoch  15 step     0/60 loss 3.2332 lr 5.21e-05
+  epoch  15 step    50/60 loss 7.7442 lr 5.63e-05
+epoch  15 | loss 7.8965 | val EPE 2.620 px | D1 22.15% | 10s (ema)
+  new best EPE 2.620 px -> runs\kitti_replay50\best.pt
+  epoch  16 step     0/60 loss 12.2618 lr 5.71e-05
+  epoch  16 step    50/60 loss 7.9183 lr 6.13e-05
+epoch  16 | loss 7.7880 | val EPE 2.562 px | D1 21.42% | 10s (ema)
+  new best EPE 2.562 px -> runs\kitti_replay50\best.pt
+  epoch  17 step     0/60 loss 10.0779 lr 6.21e-05
+  epoch  17 step    50/60 loss 8.1166 lr 6.62e-05
+epoch  17 | loss 8.0714 | val EPE 2.506 px | D1 20.67% | 10s (ema)
+  new best EPE 2.506 px -> runs\kitti_replay50\best.pt
+  epoch  18 step     0/60 loss 9.4796 lr 6.70e-05
+  epoch  18 step    50/60 loss 7.3204 lr 7.09e-05
+epoch  18 | loss 7.3309 | val EPE 2.457 px | D1 19.98% | 10s (ema)
+  new best EPE 2.457 px -> runs\kitti_replay50\best.pt
+  epoch  19 step     0/60 loss 4.9183 lr 7.16e-05
+  epoch  19 step    50/60 loss 7.1738 lr 7.54e-05
+epoch  19 | loss 7.1894 | val EPE 2.414 px | D1 19.39% | 10s (ema)
+  new best EPE 2.414 px -> runs\kitti_replay50\best.pt
+  epoch  20 step     0/60 loss 5.5808 lr 7.61e-05
+  epoch  20 step    50/60 loss 7.3306 lr 7.96e-05
+epoch  20 | loss 7.3548 | val EPE 2.368 px | D1 18.79% | 11s (ema)
+  new best EPE 2.368 px -> runs\kitti_replay50\best.pt
+  epoch  21 step     0/60 loss 4.5012 lr 8.03e-05
+  epoch  21 step    50/60 loss 7.8400 lr 8.36e-05
+epoch  21 | loss 7.5262 | val EPE 2.323 px | D1 18.24% | 12s (ema)
+  new best EPE 2.323 px -> runs\kitti_replay50\best.pt
+  epoch  22 step     0/60 loss 7.7728 lr 8.42e-05
+  epoch  22 step    50/60 loss 6.6346 lr 8.72e-05
+epoch  22 | loss 7.0682 | val EPE 2.286 px | D1 17.79% | 11s (ema)
+  new best EPE 2.286 px -> runs\kitti_replay50\best.pt
+  epoch  23 step     0/60 loss 13.2017 lr 8.78e-05
+  epoch  23 step    50/60 loss 6.6203 lr 9.04e-05
+epoch  23 | loss 6.7012 | val EPE 2.249 px | D1 17.34% | 11s (ema)
+  new best EPE 2.249 px -> runs\kitti_replay50\best.pt
+  epoch  24 step     0/60 loss 6.5928 lr 9.09e-05
+  epoch  24 step    50/60 loss 7.2179 lr 9.32e-05
+epoch  24 | loss 7.4458 | val EPE 2.214 px | D1 16.91% | 12s (ema)
+  new best EPE 2.214 px -> runs\kitti_replay50\best.pt
+  epoch  25 step     0/60 loss 4.0585 lr 9.36e-05
+  epoch  25 step    50/60 loss 8.3387 lr 9.56e-05
+epoch  25 | loss 7.8384 | val EPE 2.183 px | D1 16.55% | 11s (ema)
+  new best EPE 2.183 px -> runs\kitti_replay50\best.pt
+  epoch  26 step     0/60 loss 3.6136 lr 9.59e-05
+  epoch  26 step    50/60 loss 6.8244 lr 9.74e-05
+epoch  26 | loss 6.9410 | val EPE 2.155 px | D1 16.20% | 11s (ema)
+  new best EPE 2.155 px -> runs\kitti_replay50\best.pt
+  epoch  27 step     0/60 loss 2.6481 lr 9.77e-05
+  epoch  27 step    50/60 loss 7.1803 lr 9.88e-05
+epoch  27 | loss 6.9707 | val EPE 2.128 px | D1 15.86% | 11s (ema)
+  new best EPE 2.128 px -> runs\kitti_replay50\best.pt
+  epoch  28 step     0/60 loss 4.6710 lr 9.90e-05
+  epoch  28 step    50/60 loss 7.2375 lr 9.97e-05
+epoch  28 | loss 7.0351 | val EPE 2.104 px | D1 15.56% | 11s (ema)
+  new best EPE 2.104 px -> runs\kitti_replay50\best.pt
+  epoch  29 step     0/60 loss 8.1492 lr 9.98e-05
+  epoch  29 step    50/60 loss 6.4041 lr 1.00e-04
+epoch  29 | loss 6.7458 | val EPE 2.082 px | D1 15.26% | 11s (ema)
+  new best EPE 2.082 px -> runs\kitti_replay50\best.pt
+  epoch  30 step     0/60 loss 5.6373 lr 1.00e-04
+  epoch  30 step    50/60 loss 7.2057 lr 1.00e-04
+epoch  30 | loss 6.8696 | val EPE 2.060 px | D1 14.98% | 11s (ema)
+  new best EPE 2.060 px -> runs\kitti_replay50\best.pt
+  epoch  31 step     0/60 loss 6.6988 lr 1.00e-04
+  epoch  31 step    50/60 loss 7.1726 lr 1.00e-04
+epoch  31 | loss 7.2278 | val EPE 2.040 px | D1 14.74% | 11s (ema)
+  new best EPE 2.040 px -> runs\kitti_replay50\best.pt
+  epoch  32 step     0/60 loss 4.4410 lr 1.00e-04
+  epoch  32 step    50/60 loss 6.3144 lr 1.00e-04
+epoch  32 | loss 6.3939 | val EPE 2.021 px | D1 14.52% | 11s (ema)
+  new best EPE 2.021 px -> runs\kitti_replay50\best.pt
+  epoch  33 step     0/60 loss 4.1767 lr 1.00e-04
+  epoch  33 step    50/60 loss 6.5346 lr 9.99e-05
+epoch  33 | loss 6.7464 | val EPE 2.002 px | D1 14.29% | 11s (ema)
+  new best EPE 2.002 px -> runs\kitti_replay50\best.pt
+  epoch  34 step     0/60 loss 4.2911 lr 9.99e-05
+  epoch  34 step    50/60 loss 6.1221 lr 9.99e-05
+epoch  34 | loss 6.9506 | val EPE 1.986 px | D1 14.12% | 10s (ema)
+  new best EPE 1.986 px -> runs\kitti_replay50\best.pt
+  epoch  35 step     0/60 loss 8.2005 lr 9.99e-05
+  epoch  35 step    50/60 loss 6.4008 lr 9.99e-05
+epoch  35 | loss 6.5580 | val EPE 1.970 px | D1 13.95% | 10s (ema)
+  new best EPE 1.970 px -> runs\kitti_replay50\best.pt
+  epoch  36 step     0/60 loss 7.7181 lr 9.99e-05
+  epoch  36 step    50/60 loss 6.2734 lr 9.98e-05
+epoch  36 | loss 6.4429 | val EPE 1.954 px | D1 13.78% | 10s (ema)
+  new best EPE 1.954 px -> runs\kitti_replay50\best.pt
+  epoch  37 step     0/60 loss 8.0733 lr 9.98e-05
+  epoch  37 step    50/60 loss 6.1656 lr 9.98e-05
+epoch  37 | loss 6.2512 | val EPE 1.939 px | D1 13.63% | 10s (ema)
+  new best EPE 1.939 px -> runs\kitti_replay50\best.pt
+  epoch  38 step     0/60 loss 3.4206 lr 9.98e-05
+  epoch  38 step    50/60 loss 6.5322 lr 9.97e-05
+epoch  38 | loss 6.2790 | val EPE 1.925 px | D1 13.48% | 10s (ema)
+  new best EPE 1.925 px -> runs\kitti_replay50\best.pt
+  epoch  39 step     0/60 loss 12.5034 lr 9.97e-05
+  epoch  39 step    50/60 loss 6.1746 lr 9.97e-05
+epoch  39 | loss 6.2971 | val EPE 1.910 px | D1 13.32% | 10s (ema)
+  new best EPE 1.910 px -> runs\kitti_replay50\best.pt
+  epoch  40 step     0/60 loss 6.2946 lr 9.97e-05
+  epoch  40 step    50/60 loss 6.5410 lr 9.96e-05
+epoch  40 | loss 6.5102 | val EPE 1.897 px | D1 13.18% | 10s (ema)
+  new best EPE 1.897 px -> runs\kitti_replay50\best.pt
+  epoch  41 step     0/60 loss 4.8258 lr 9.96e-05
+  epoch  41 step    50/60 loss 6.9409 lr 9.95e-05
+epoch  41 | loss 6.8237 | val EPE 1.885 px | D1 13.05% | 10s (ema)
+  new best EPE 1.885 px -> runs\kitti_replay50\best.pt
+  epoch  42 step     0/60 loss 5.8356 lr 9.95e-05
+  epoch  42 step    50/60 loss 6.1914 lr 9.94e-05
+epoch  42 | loss 6.4183 | val EPE 1.873 px | D1 12.93% | 10s (ema)
+  new best EPE 1.873 px -> runs\kitti_replay50\best.pt
+  epoch  43 step     0/60 loss 4.2586 lr 9.94e-05
+  epoch  43 step    50/60 loss 6.1808 lr 9.94e-05
+epoch  43 | loss 6.2479 | val EPE 1.861 px | D1 12.81% | 10s (ema)
+  new best EPE 1.861 px -> runs\kitti_replay50\best.pt
+  epoch  44 step     0/60 loss 3.0202 lr 9.93e-05
+  epoch  44 step    50/60 loss 6.6879 lr 9.93e-05
+epoch  44 | loss 6.5339 | val EPE 1.852 px | D1 12.71% | 10s (ema)
+  new best EPE 1.852 px -> runs\kitti_replay50\best.pt
+  epoch  45 step     0/60 loss 12.3068 lr 9.92e-05
+  epoch  45 step    50/60 loss 6.4916 lr 9.92e-05
+epoch  45 | loss 6.4232 | val EPE 1.844 px | D1 12.61% | 10s (ema)
+  new best EPE 1.844 px -> runs\kitti_replay50\best.pt
+  epoch  46 step     0/60 loss 6.6351 lr 9.91e-05
+  epoch  46 step    50/60 loss 6.1940 lr 9.90e-05
+epoch  46 | loss 6.2942 | val EPE 1.834 px | D1 12.52% | 10s (ema)
+  new best EPE 1.834 px -> runs\kitti_replay50\best.pt
+  epoch  47 step     0/60 loss 14.1341 lr 9.90e-05
+  epoch  47 step    50/60 loss 6.6546 lr 9.89e-05
+epoch  47 | loss 6.6692 | val EPE 1.825 px | D1 12.42% | 10s (ema)
+  new best EPE 1.825 px -> runs\kitti_replay50\best.pt
+  epoch  48 step     0/60 loss 10.0973 lr 9.89e-05
+  epoch  48 step    50/60 loss 6.7498 lr 9.88e-05
+epoch  48 | loss 6.7000 | val EPE 1.818 px | D1 12.33% | 10s (ema)
+  new best EPE 1.818 px -> runs\kitti_replay50\best.pt
+  epoch  49 step     0/60 loss 7.9900 lr 9.88e-05
+  epoch  49 step    50/60 loss 6.0303 lr 9.87e-05
+epoch  49 | loss 6.1294 | val EPE 1.811 px | D1 12.25% | 10s (ema)
+  new best EPE 1.811 px -> runs\kitti_replay50\best.pt
+  epoch  50 step     0/60 loss 6.8718 lr 9.86e-05
+  epoch  50 step    50/60 loss 5.8664 lr 9.85e-05
+epoch  50 | loss 5.9811 | val EPE 1.803 px | D1 12.17% | 10s (ema)
+  new best EPE 1.803 px -> runs\kitti_replay50\best.pt
+  epoch  51 step     0/60 loss 16.3974 lr 9.85e-05
+  epoch  51 step    50/60 loss 6.6278 lr 9.84e-05
+epoch  51 | loss 6.4886 | val EPE 1.796 px | D1 12.10% | 10s (ema)
+  new best EPE 1.796 px -> runs\kitti_replay50\best.pt
+  epoch  52 step     0/60 loss 4.3027 lr 9.84e-05
+  epoch  52 step    50/60 loss 5.8107 lr 9.82e-05
+epoch  52 | loss 6.2080 | val EPE 1.789 px | D1 12.03% | 10s (ema)
+  new best EPE 1.789 px -> runs\kitti_replay50\best.pt
+  epoch  53 step     0/60 loss 5.8601 lr 9.82e-05
+  epoch  53 step    50/60 loss 6.4120 lr 9.81e-05
+epoch  53 | loss 6.3539 | val EPE 1.782 px | D1 11.95% | 10s (ema)
+  new best EPE 1.782 px -> runs\kitti_replay50\best.pt
+  epoch  54 step     0/60 loss 13.1213 lr 9.81e-05
+  epoch  54 step    50/60 loss 6.1218 lr 9.79e-05
+epoch  54 | loss 5.9886 | val EPE 1.776 px | D1 11.88% | 10s (ema)
+  new best EPE 1.776 px -> runs\kitti_replay50\best.pt
+  epoch  55 step     0/60 loss 7.5592 lr 9.79e-05
+  epoch  55 step    50/60 loss 5.8449 lr 9.78e-05
+epoch  55 | loss 6.2298 | val EPE 1.771 px | D1 11.83% | 10s (ema)
+  new best EPE 1.771 px -> runs\kitti_replay50\best.pt
+  epoch  56 step     0/60 loss 7.9696 lr 9.77e-05
+  epoch  56 step    50/60 loss 6.2505 lr 9.76e-05
+epoch  56 | loss 6.4204 | val EPE 1.764 px | D1 11.76% | 10s (ema)
+  new best EPE 1.764 px -> runs\kitti_replay50\best.pt
+  epoch  57 step     0/60 loss 4.9679 lr 9.75e-05
+  epoch  57 step    50/60 loss 6.1006 lr 9.74e-05
+epoch  57 | loss 6.0362 | val EPE 1.758 px | D1 11.71% | 10s (ema)
+  new best EPE 1.758 px -> runs\kitti_replay50\best.pt
+  epoch  58 step     0/60 loss 7.0689 lr 9.74e-05
+  epoch  58 step    50/60 loss 5.9232 lr 9.72e-05
+epoch  58 | loss 6.2056 | val EPE 1.753 px | D1 11.66% | 11s (ema)
+  new best EPE 1.753 px -> runs\kitti_replay50\best.pt
+  epoch  59 step     0/60 loss 5.0238 lr 9.72e-05
+  epoch  59 step    50/60 loss 6.0047 lr 9.70e-05
+epoch  59 | loss 5.9861 | val EPE 1.748 px | D1 11.60% | 12s (ema)
+  new best EPE 1.748 px -> runs\kitti_replay50\best.pt
+  epoch  60 step     0/60 loss 9.8543 lr 9.70e-05
+  epoch  60 step    50/60 loss 6.6450 lr 9.68e-05
+epoch  60 | loss 6.7208 | val EPE 1.742 px | D1 11.54% | 11s (ema)
+  new best EPE 1.742 px -> runs\kitti_replay50\best.pt
+  epoch  61 step     0/60 loss 8.3720 lr 9.68e-05
+  epoch  61 step    50/60 loss 6.3082 lr 9.66e-05
+epoch  61 | loss 6.4838 | val EPE 1.738 px | D1 11.49% | 11s (ema)
+  new best EPE 1.738 px -> runs\kitti_replay50\best.pt
+  epoch  62 step     0/60 loss 3.5005 lr 9.66e-05
+  epoch  62 step    50/60 loss 6.8880 lr 9.64e-05
+epoch  62 | loss 6.5634 | val EPE 1.734 px | D1 11.43% | 11s (ema)
+  new best EPE 1.734 px -> runs\kitti_replay50\best.pt
+  epoch  63 step     0/60 loss 6.8839 lr 9.64e-05
+  epoch  63 step    50/60 loss 6.1395 lr 9.62e-05
+epoch  63 | loss 6.5169 | val EPE 1.729 px | D1 11.37% | 11s (ema)
+  new best EPE 1.729 px -> runs\kitti_replay50\best.pt
+  epoch  64 step     0/60 loss 5.8332 lr 9.61e-05
+  epoch  64 step    50/60 loss 6.7669 lr 9.59e-05
+epoch  64 | loss 6.4456 | val EPE 1.727 px | D1 11.32% | 11s (ema)
+  new best EPE 1.727 px -> runs\kitti_replay50\best.pt
+  epoch  65 step     0/60 loss 6.2936 lr 9.59e-05
+  epoch  65 step    50/60 loss 6.2502 lr 9.57e-05
+epoch  65 | loss 6.2962 | val EPE 1.720 px | D1 11.26% | 11s (ema)
+  new best EPE 1.720 px -> runs\kitti_replay50\best.pt
+  epoch  66 step     0/60 loss 2.3044 lr 9.57e-05
+  epoch  66 step    50/60 loss 5.4268 lr 9.55e-05
+epoch  66 | loss 5.7989 | val EPE 1.717 px | D1 11.21% | 12s (ema)
+  new best EPE 1.717 px -> runs\kitti_replay50\best.pt
+  epoch  67 step     0/60 loss 8.5631 lr 9.54e-05
+  epoch  67 step    50/60 loss 6.5973 lr 9.52e-05
+epoch  67 | loss 6.3342 | val EPE 1.710 px | D1 11.17% | 11s (ema)
+  new best EPE 1.710 px -> runs\kitti_replay50\best.pt
+  epoch  68 step     0/60 loss 2.2072 lr 9.52e-05
+  epoch  68 step    50/60 loss 6.2851 lr 9.50e-05
+epoch  68 | loss 6.1233 | val EPE 1.703 px | D1 11.12% | 10s (ema)
+  new best EPE 1.703 px -> runs\kitti_replay50\best.pt
+  epoch  69 step     0/60 loss 3.7204 lr 9.49e-05
+  epoch  69 step    50/60 loss 6.0344 lr 9.47e-05
+epoch  69 | loss 6.2014 | val EPE 1.697 px | D1 11.08% | 10s (ema)
+  new best EPE 1.697 px -> runs\kitti_replay50\best.pt
+  epoch  70 step     0/60 loss 3.1989 lr 9.47e-05
+  epoch  70 step    50/60 loss 5.6753 lr 9.45e-05
+epoch  70 | loss 5.5438 | val EPE 1.693 px | D1 11.04% | 10s (ema)
+  new best EPE 1.693 px -> runs\kitti_replay50\best.pt
+  epoch  71 step     0/60 loss 6.6754 lr 9.44e-05
+  epoch  71 step    50/60 loss 5.8909 lr 9.42e-05
+epoch  71 | loss 5.8719 | val EPE 1.688 px | D1 10.98% | 10s (ema)
+  new best EPE 1.688 px -> runs\kitti_replay50\best.pt
+  epoch  72 step     0/60 loss 3.0686 lr 9.41e-05
+  epoch  72 step    50/60 loss 5.6693 lr 9.39e-05
+epoch  72 | loss 5.7447 | val EPE 1.684 px | D1 10.94% | 10s (ema)
+  new best EPE 1.684 px -> runs\kitti_replay50\best.pt
+  epoch  73 step     0/60 loss 12.7559 lr 9.39e-05
+  epoch  73 step    50/60 loss 5.9347 lr 9.36e-05
+epoch  73 | loss 5.7599 | val EPE 1.680 px | D1 10.90% | 10s (ema)
+  new best EPE 1.680 px -> runs\kitti_replay50\best.pt
+  epoch  74 step     0/60 loss 14.1539 lr 9.36e-05
+  epoch  74 step    50/60 loss 5.9908 lr 9.33e-05
+epoch  74 | loss 5.8408 | val EPE 1.677 px | D1 10.87% | 10s (ema)
+  new best EPE 1.677 px -> runs\kitti_replay50\best.pt
+  epoch  75 step     0/60 loss 3.0083 lr 9.33e-05
+  epoch  75 step    50/60 loss 6.3109 lr 9.30e-05
+epoch  75 | loss 6.3132 | val EPE 1.676 px | D1 10.83% | 10s (ema)
+  new best EPE 1.676 px -> runs\kitti_replay50\best.pt
+  epoch  76 step     0/60 loss 7.4107 lr 9.30e-05
+  epoch  76 step    50/60 loss 5.2384 lr 9.27e-05
+epoch  76 | loss 5.5109 | val EPE 1.674 px | D1 10.79% | 10s (ema)
+  new best EPE 1.674 px -> runs\kitti_replay50\best.pt
+  epoch  77 step     0/60 loss 7.8982 lr 9.27e-05
+  epoch  77 step    50/60 loss 5.6001 lr 9.24e-05
+epoch  77 | loss 5.5545 | val EPE 1.673 px | D1 10.75% | 11s (ema)
+  new best EPE 1.673 px -> runs\kitti_replay50\best.pt
+  epoch  78 step     0/60 loss 5.4674 lr 9.24e-05
+  epoch  78 step    50/60 loss 5.7465 lr 9.21e-05
+epoch  78 | loss 5.6334 | val EPE 1.671 px | D1 10.72% | 11s (ema)
+  new best EPE 1.671 px -> runs\kitti_replay50\best.pt
+  epoch  79 step     0/60 loss 3.3700 lr 9.21e-05
+  epoch  79 step    50/60 loss 5.8669 lr 9.18e-05
+epoch  79 | loss 5.9189 | val EPE 1.670 px | D1 10.69% | 11s (ema)
+  new best EPE 1.670 px -> runs\kitti_replay50\best.pt
+  epoch  80 step     0/60 loss 5.5537 lr 9.18e-05
+  epoch  80 step    50/60 loss 6.0265 lr 9.15e-05
+epoch  80 | loss 6.0111 | val EPE 1.666 px | D1 10.66% | 11s (ema)
+  new best EPE 1.666 px -> runs\kitti_replay50\best.pt
+  epoch  81 step     0/60 loss 7.0909 lr 9.14e-05
+  epoch  81 step    50/60 loss 6.0937 lr 9.12e-05
+epoch  81 | loss 5.8563 | val EPE 1.665 px | D1 10.62% | 11s (ema)
+  new best EPE 1.665 px -> runs\kitti_replay50\best.pt
+  epoch  82 step     0/60 loss 4.5691 lr 9.11e-05
+  epoch  82 step    50/60 loss 5.8918 lr 9.08e-05
+epoch  82 | loss 5.8809 | val EPE 1.663 px | D1 10.60% | 11s (ema)
+  new best EPE 1.663 px -> runs\kitti_replay50\best.pt
+  epoch  83 step     0/60 loss 2.2233 lr 9.08e-05
+  epoch  83 step    50/60 loss 6.3505 lr 9.05e-05
+epoch  83 | loss 6.1310 | val EPE 1.663 px | D1 10.58% | 11s (ema)
+  new best EPE 1.663 px -> runs\kitti_replay50\best.pt
+  epoch  84 step     0/60 loss 3.6370 lr 9.04e-05
+  epoch  84 step    50/60 loss 6.1256 lr 9.02e-05
+epoch  84 | loss 5.9203 | val EPE 1.662 px | D1 10.56% | 11s (ema)
+  new best EPE 1.662 px -> runs\kitti_replay50\best.pt
+  epoch  85 step     0/60 loss 12.6924 lr 9.01e-05
+  epoch  85 step    50/60 loss 5.7987 lr 8.98e-05
+epoch  85 | loss 5.8255 | val EPE 1.661 px | D1 10.53% | 11s (ema)
+  new best EPE 1.661 px -> runs\kitti_replay50\best.pt
+  epoch  86 step     0/60 loss 2.7768 lr 8.97e-05
+  epoch  86 step    50/60 loss 5.5813 lr 8.94e-05
+epoch  86 | loss 5.6641 | val EPE 1.658 px | D1 10.51% | 10s (ema)
+  new best EPE 1.658 px -> runs\kitti_replay50\best.pt
+  epoch  87 step     0/60 loss 2.3104 lr 8.94e-05
+  epoch  87 step    50/60 loss 6.0349 lr 8.91e-05
+epoch  87 | loss 5.8715 | val EPE 1.655 px | D1 10.50% | 10s (ema)
+  new best EPE 1.655 px -> runs\kitti_replay50\best.pt
+  epoch  88 step     0/60 loss 7.7518 lr 8.90e-05
+  epoch  88 step    50/60 loss 5.7652 lr 8.87e-05
+epoch  88 | loss 6.0176 | val EPE 1.654 px | D1 10.48% | 10s (ema)
+  new best EPE 1.654 px -> runs\kitti_replay50\best.pt
+  epoch  89 step     0/60 loss 3.3854 lr 8.87e-05
+  epoch  89 step    50/60 loss 5.7537 lr 8.84e-05
+epoch  89 | loss 5.7579 | val EPE 1.652 px | D1 10.45% | 10s (ema)
+  new best EPE 1.652 px -> runs\kitti_replay50\best.pt
+  epoch  90 step     0/60 loss 5.9526 lr 8.83e-05
+  epoch  90 step    50/60 loss 5.3163 lr 8.80e-05
+epoch  90 | loss 5.6761 | val EPE 1.648 px | D1 10.43% | 10s (ema)
+  new best EPE 1.648 px -> runs\kitti_replay50\best.pt
+  epoch  91 step     0/60 loss 8.1402 lr 8.79e-05
+  epoch  91 step    50/60 loss 5.3099 lr 8.76e-05
+epoch  91 | loss 5.3981 | val EPE 1.646 px | D1 10.41% | 10s (ema)
+  new best EPE 1.646 px -> runs\kitti_replay50\best.pt
+  epoch  92 step     0/60 loss 7.4694 lr 8.75e-05
+  epoch  92 step    50/60 loss 5.7236 lr 8.72e-05
+epoch  92 | loss 5.7853 | val EPE 1.645 px | D1 10.39% | 10s (ema)
+  new best EPE 1.645 px -> runs\kitti_replay50\best.pt
+  epoch  93 step     0/60 loss 4.9502 lr 8.71e-05
+  epoch  93 step    50/60 loss 5.2962 lr 8.68e-05
+epoch  93 | loss 5.6916 | val EPE 1.642 px | D1 10.38% | 10s (ema)
+  new best EPE 1.642 px -> runs\kitti_replay50\best.pt
+  epoch  94 step     0/60 loss 4.5505 lr 8.68e-05
+  epoch  94 step    50/60 loss 5.0491 lr 8.64e-05
+epoch  94 | loss 5.5667 | val EPE 1.640 px | D1 10.36% | 10s (ema)
+  new best EPE 1.640 px -> runs\kitti_replay50\best.pt
+  epoch  95 step     0/60 loss 20.3820 lr 8.64e-05
+  epoch  95 step    50/60 loss 5.8938 lr 8.60e-05
+epoch  95 | loss 5.7004 | val EPE 1.640 px | D1 10.32% | 10s (ema)
+  epoch  96 step     0/60 loss 9.2494 lr 8.60e-05
+  epoch  96 step    50/60 loss 5.7855 lr 8.56e-05
+epoch  96 | loss 5.5343 | val EPE 1.640 px | D1 10.30% | 10s (ema)
+  new best EPE 1.640 px -> runs\kitti_replay50\best.pt
+  epoch  97 step     0/60 loss 8.7810 lr 8.55e-05
+  epoch  97 step    50/60 loss 5.7927 lr 8.52e-05
+epoch  97 | loss 5.7191 | val EPE 1.640 px | D1 10.28% | 10s (ema)
+  new best EPE 1.640 px -> runs\kitti_replay50\best.pt
+  epoch  98 step     0/60 loss 1.8701 lr 8.51e-05
+  epoch  98 step    50/60 loss 5.4451 lr 8.48e-05
+epoch  98 | loss 5.7451 | val EPE 1.640 px | D1 10.26% | 10s (ema)
+  new best EPE 1.640 px -> runs\kitti_replay50\best.pt
+  epoch  99 step     0/60 loss 5.7707 lr 8.47e-05
+  epoch  99 step    50/60 loss 5.7743 lr 8.44e-05
+epoch  99 | loss 5.7663 | val EPE 1.639 px | D1 10.24% | 10s (ema)
+  new best EPE 1.639 px -> runs\kitti_replay50\best.pt
+  epoch 100 step     0/60 loss 6.1325 lr 8.43e-05
+  epoch 100 step    50/60 loss 5.2255 lr 8.39e-05
+epoch 100 | loss 5.2487 | val EPE 1.636 px | D1 10.22% | 10s (ema)
+  new best EPE 1.636 px -> runs\kitti_replay50\best.pt
+  epoch 101 step     0/60 loss 3.0959 lr 8.39e-05
+  epoch 101 step    50/60 loss 6.1060 lr 8.35e-05
+epoch 101 | loss 5.8561 | val EPE 1.636 px | D1 10.19% | 11s (ema)
+  new best EPE 1.636 px -> runs\kitti_replay50\best.pt
+  epoch 102 step     0/60 loss 3.7657 lr 8.34e-05
+  epoch 102 step    50/60 loss 5.4612 lr 8.31e-05
+epoch 102 | loss 5.2114 | val EPE 1.634 px | D1 10.16% | 11s (ema)
+  new best EPE 1.634 px -> runs\kitti_replay50\best.pt
+  epoch 103 step     0/60 loss 5.8988 lr 8.30e-05
+  epoch 103 step    50/60 loss 6.0541 lr 8.26e-05
+epoch 103 | loss 5.8699 | val EPE 1.633 px | D1 10.14% | 11s (ema)
+  new best EPE 1.633 px -> runs\kitti_replay50\best.pt
+  epoch 104 step     0/60 loss 4.3678 lr 8.26e-05
+  epoch 104 step    50/60 loss 5.6540 lr 8.22e-05
+epoch 104 | loss 5.5482 | val EPE 1.631 px | D1 10.13% | 10s (ema)
+  new best EPE 1.631 px -> runs\kitti_replay50\best.pt
+  epoch 105 step     0/60 loss 8.7365 lr 8.21e-05
+  epoch 105 step    50/60 loss 5.2623 lr 8.18e-05
+epoch 105 | loss 5.3513 | val EPE 1.627 px | D1 10.10% | 10s (ema)
+  new best EPE 1.627 px -> runs\kitti_replay50\best.pt
+  epoch 106 step     0/60 loss 1.8275 lr 8.17e-05
+  epoch 106 step    50/60 loss 5.6534 lr 8.13e-05
+epoch 106 | loss 5.5352 | val EPE 1.627 px | D1 10.09% | 10s (ema)
+  new best EPE 1.627 px -> runs\kitti_replay50\best.pt
+  epoch 107 step     0/60 loss 9.4339 lr 8.12e-05
+  epoch 107 step    50/60 loss 5.8443 lr 8.08e-05
+epoch 107 | loss 5.8298 | val EPE 1.627 px | D1 10.07% | 10s (ema)
+  epoch 108 step     0/60 loss 3.4329 lr 8.08e-05
+  epoch 108 step    50/60 loss 5.5435 lr 8.04e-05
+epoch 108 | loss 5.3655 | val EPE 1.629 px | D1 10.07% | 10s (ema)
+  epoch 109 step     0/60 loss 5.7779 lr 8.03e-05
+  epoch 109 step    50/60 loss 5.3385 lr 7.99e-05
+epoch 109 | loss 5.3323 | val EPE 1.629 px | D1 10.06% | 10s (ema)
+  epoch 110 step     0/60 loss 5.0569 lr 7.98e-05
+  epoch 110 step    50/60 loss 5.4352 lr 7.95e-05
+epoch 110 | loss 5.3698 | val EPE 1.628 px | D1 10.05% | 10s (ema)
+  epoch 111 step     0/60 loss 2.9826 lr 7.94e-05
+  epoch 111 step    50/60 loss 5.5308 lr 7.90e-05
+epoch 111 | loss 5.4652 | val EPE 1.628 px | D1 10.04% | 10s (ema)
+  epoch 112 step     0/60 loss 3.8512 lr 7.89e-05
+  epoch 112 step    50/60 loss 5.6199 lr 7.85e-05
+epoch 112 | loss 5.5592 | val EPE 1.628 px | D1 10.03% | 10s (ema)
+  epoch 113 step     0/60 loss 10.0337 lr 7.84e-05
+  epoch 113 step    50/60 loss 5.2232 lr 7.80e-05
+epoch 113 | loss 5.2358 | val EPE 1.627 px | D1 10.01% | 10s (ema)
+  new best EPE 1.627 px -> runs\kitti_replay50\best.pt
+  epoch 114 step     0/60 loss 8.0847 lr 7.79e-05
+  epoch 114 step    50/60 loss 6.1062 lr 7.75e-05
+epoch 114 | loss 6.2217 | val EPE 1.626 px | D1 10.00% | 10s (ema)
+  new best EPE 1.626 px -> runs\kitti_replay50\best.pt
+  epoch 115 step     0/60 loss 3.1999 lr 7.75e-05
+  epoch 115 step    50/60 loss 4.8615 lr 7.71e-05
+epoch 115 | loss 5.3787 | val EPE 1.624 px | D1 9.99% | 10s (ema)
+  new best EPE 1.624 px -> runs\kitti_replay50\best.pt
+  epoch 116 step     0/60 loss 2.7823 lr 7.70e-05
+  epoch 116 step    50/60 loss 5.1780 lr 7.66e-05
+epoch 116 | loss 5.4607 | val EPE 1.621 px | D1 9.98% | 10s (ema)
+  new best EPE 1.621 px -> runs\kitti_replay50\best.pt
+  epoch 117 step     0/60 loss 3.5318 lr 7.65e-05
+  epoch 117 step    50/60 loss 5.1265 lr 7.61e-05
+epoch 117 | loss 5.2200 | val EPE 1.620 px | D1 9.95% | 9s (ema)
+  new best EPE 1.620 px -> runs\kitti_replay50\best.pt
+  epoch 118 step     0/60 loss 3.1757 lr 7.60e-05
+  epoch 118 step    50/60 loss 5.6452 lr 7.56e-05
+epoch 118 | loss 5.6745 | val EPE 1.617 px | D1 9.93% | 10s (ema)
+  new best EPE 1.617 px -> runs\kitti_replay50\best.pt
+  epoch 119 step     0/60 loss 2.5991 lr 7.55e-05
+  epoch 119 step    50/60 loss 5.0759 lr 7.51e-05
+epoch 119 | loss 5.0207 | val EPE 1.615 px | D1 9.91% | 9s (ema)
+  new best EPE 1.615 px -> runs\kitti_replay50\best.pt
+  epoch 120 step     0/60 loss 3.2876 lr 7.50e-05
+  epoch 120 step    50/60 loss 5.7890 lr 7.46e-05
+epoch 120 | loss 5.7116 | val EPE 1.614 px | D1 9.89% | 10s (ema)
+  new best EPE 1.614 px -> runs\kitti_replay50\best.pt
+  epoch 121 step     0/60 loss 5.8714 lr 7.45e-05
+  epoch 121 step    50/60 loss 5.1457 lr 7.41e-05
+epoch 121 | loss 5.4001 | val EPE 1.614 px | D1 9.87% | 10s (ema)
+  new best EPE 1.614 px -> runs\kitti_replay50\best.pt
+  epoch 122 step     0/60 loss 17.6731 lr 7.40e-05
+  epoch 122 step    50/60 loss 5.5494 lr 7.35e-05
+epoch 122 | loss 5.4304 | val EPE 1.611 px | D1 9.86% | 10s (ema)
+  new best EPE 1.611 px -> runs\kitti_replay50\best.pt
+  epoch 123 step     0/60 loss 8.9752 lr 7.35e-05
+  epoch 123 step    50/60 loss 5.7976 lr 7.30e-05
+epoch 123 | loss 5.6275 | val EPE 1.611 px | D1 9.85% | 10s (ema)
+  epoch 124 step     0/60 loss 5.0435 lr 7.29e-05
+  epoch 124 step    50/60 loss 5.5087 lr 7.25e-05
+epoch 124 | loss 5.3667 | val EPE 1.611 px | D1 9.83% | 10s (ema)
+  new best EPE 1.611 px -> runs\kitti_replay50\best.pt
+  epoch 125 step     0/60 loss 6.7575 lr 7.24e-05
+  epoch 125 step    50/60 loss 5.5684 lr 7.20e-05
+epoch 125 | loss 5.4646 | val EPE 1.610 px | D1 9.81% | 10s (ema)
+  new best EPE 1.610 px -> runs\kitti_replay50\best.pt
+  epoch 126 step     0/60 loss 2.0555 lr 7.19e-05
+  epoch 126 step    50/60 loss 5.1827 lr 7.15e-05
+epoch 126 | loss 5.0036 | val EPE 1.610 px | D1 9.79% | 10s (ema)
+  new best EPE 1.610 px -> runs\kitti_replay50\best.pt
+  epoch 127 step     0/60 loss 5.0599 lr 7.14e-05
+  epoch 127 step    50/60 loss 5.2663 lr 7.09e-05
+epoch 127 | loss 5.3563 | val EPE 1.610 px | D1 9.78% | 11s (ema)
+  epoch 128 step     0/60 loss 5.3494 lr 7.08e-05
+  epoch 128 step    50/60 loss 6.2180 lr 7.04e-05
+epoch 128 | loss 5.9944 | val EPE 1.607 px | D1 9.77% | 10s (ema)
+  new best EPE 1.607 px -> runs\kitti_replay50\best.pt
+  epoch 129 step     0/60 loss 5.0295 lr 7.03e-05
+  epoch 129 step    50/60 loss 4.9225 lr 6.99e-05
+epoch 129 | loss 5.2221 | val EPE 1.606 px | D1 9.75% | 11s (ema)
+  new best EPE 1.606 px -> runs\kitti_replay50\best.pt
+  epoch 130 step     0/60 loss 4.7159 lr 6.98e-05
+  epoch 130 step    50/60 loss 5.4654 lr 6.93e-05
+epoch 130 | loss 5.6232 | val EPE 1.605 px | D1 9.74% | 11s (ema)
+  new best EPE 1.605 px -> runs\kitti_replay50\best.pt
+  epoch 131 step     0/60 loss 2.2270 lr 6.93e-05
+  epoch 131 step    50/60 loss 5.2033 lr 6.88e-05
+epoch 131 | loss 5.2522 | val EPE 1.604 px | D1 9.74% | 12s (ema)
+  new best EPE 1.604 px -> runs\kitti_replay50\best.pt
+  epoch 132 step     0/60 loss 8.9488 lr 6.87e-05
+  epoch 132 step    50/60 loss 5.9158 lr 6.83e-05
+epoch 132 | loss 5.9667 | val EPE 1.603 px | D1 9.73% | 11s (ema)
+  new best EPE 1.603 px -> runs\kitti_replay50\best.pt
+  epoch 133 step     0/60 loss 5.7418 lr 6.82e-05
+  epoch 133 step    50/60 loss 5.1194 lr 6.77e-05
+epoch 133 | loss 5.2076 | val EPE 1.603 px | D1 9.73% | 11s (ema)
+  epoch 134 step     0/60 loss 3.5313 lr 6.76e-05
+  epoch 134 step    50/60 loss 5.0154 lr 6.72e-05
+epoch 134 | loss 4.9322 | val EPE 1.602 px | D1 9.73% | 12s (ema)
+  new best EPE 1.602 px -> runs\kitti_replay50\best.pt
+  epoch 135 step     0/60 loss 2.8940 lr 6.71e-05
+  epoch 135 step    50/60 loss 5.3717 lr 6.66e-05
+epoch 135 | loss 5.2918 | val EPE 1.600 px | D1 9.72% | 11s (ema)
+  new best EPE 1.600 px -> runs\kitti_replay50\best.pt
+  epoch 136 step     0/60 loss 4.0785 lr 6.65e-05
+  epoch 136 step    50/60 loss 4.7551 lr 6.61e-05
+epoch 136 | loss 5.2935 | val EPE 1.599 px | D1 9.71% | 10s (ema)
+  new best EPE 1.599 px -> runs\kitti_replay50\best.pt
+  epoch 137 step     0/60 loss 4.3261 lr 6.60e-05
+  epoch 137 step    50/60 loss 5.5346 lr 6.55e-05
+epoch 137 | loss 5.4861 | val EPE 1.598 px | D1 9.72% | 10s (ema)
+  new best EPE 1.598 px -> runs\kitti_replay50\best.pt
+  epoch 138 step     0/60 loss 6.0462 lr 6.54e-05
+  epoch 138 step    50/60 loss 5.8752 lr 6.50e-05
+epoch 138 | loss 5.6277 | val EPE 1.597 px | D1 9.71% | 11s (ema)
+  new best EPE 1.597 px -> runs\kitti_replay50\best.pt
+  epoch 139 step     0/60 loss 3.8429 lr 6.49e-05
+  epoch 139 step    50/60 loss 4.8325 lr 6.44e-05
+epoch 139 | loss 4.8206 | val EPE 1.596 px | D1 9.70% | 10s (ema)
+  new best EPE 1.596 px -> runs\kitti_replay50\best.pt
+  epoch 140 step     0/60 loss 7.8371 lr 6.43e-05
+  epoch 140 step    50/60 loss 5.3586 lr 6.39e-05
+epoch 140 | loss 5.3398 | val EPE 1.594 px | D1 9.71% | 10s (ema)
+  new best EPE 1.594 px -> runs\kitti_replay50\best.pt
+  epoch 141 step     0/60 loss 4.5545 lr 6.38e-05
+  epoch 141 step    50/60 loss 5.4220 lr 6.33e-05
+epoch 141 | loss 5.4636 | val EPE 1.594 px | D1 9.70% | 10s (ema)
+  new best EPE 1.594 px -> runs\kitti_replay50\best.pt
+  epoch 142 step     0/60 loss 4.8613 lr 6.32e-05
+  epoch 142 step    50/60 loss 6.2275 lr 6.27e-05
+epoch 142 | loss 5.7419 | val EPE 1.594 px | D1 9.70% | 10s (ema)
+  epoch 143 step     0/60 loss 2.4791 lr 6.26e-05
+  epoch 143 step    50/60 loss 5.2523 lr 6.22e-05
+epoch 143 | loss 5.0633 | val EPE 1.594 px | D1 9.69% | 10s (ema)
+  epoch 144 step     0/60 loss 2.9995 lr 6.21e-05
+  epoch 144 step    50/60 loss 5.9047 lr 6.16e-05
+epoch 144 | loss 5.8916 | val EPE 1.594 px | D1 9.69% | 10s (ema)
+  epoch 145 step     0/60 loss 4.6158 lr 6.15e-05
+  epoch 145 step    50/60 loss 4.9343 lr 6.10e-05
+epoch 145 | loss 5.0371 | val EPE 1.594 px | D1 9.68% | 10s (ema)
+  epoch 146 step     0/60 loss 4.3850 lr 6.09e-05
+  epoch 146 step    50/60 loss 5.0608 lr 6.05e-05
+epoch 146 | loss 5.3620 | val EPE 1.592 px | D1 9.68% | 10s (ema)
+  new best EPE 1.592 px -> runs\kitti_replay50\best.pt
+  epoch 147 step     0/60 loss 6.5916 lr 6.04e-05
+  epoch 147 step    50/60 loss 4.6587 lr 5.99e-05
+epoch 147 | loss 5.2697 | val EPE 1.592 px | D1 9.67% | 10s (ema)
+  new best EPE 1.592 px -> runs\kitti_replay50\best.pt
+  epoch 148 step     0/60 loss 2.6668 lr 5.98e-05
+  epoch 148 step    50/60 loss 5.1943 lr 5.93e-05
+epoch 148 | loss 5.2860 | val EPE 1.592 px | D1 9.67% | 10s (ema)
+  epoch 149 step     0/60 loss 2.7759 lr 5.92e-05
+  epoch 149 step    50/60 loss 4.5958 lr 5.88e-05
+epoch 149 | loss 5.0012 | val EPE 1.591 px | D1 9.67% | 11s (ema)
+  new best EPE 1.591 px -> runs\kitti_replay50\best.pt
+  epoch 150 step     0/60 loss 3.8541 lr 5.87e-05
+  epoch 150 step    50/60 loss 5.4336 lr 5.82e-05
+epoch 150 | loss 5.4850 | val EPE 1.590 px | D1 9.65% | 10s (ema)
+  new best EPE 1.590 px -> runs\kitti_replay50\best.pt
+  epoch 151 step     0/60 loss 4.2361 lr 5.81e-05
+  epoch 151 step    50/60 loss 5.2532 lr 5.76e-05
+epoch 151 | loss 5.0287 | val EPE 1.588 px | D1 9.63% | 10s (ema)
+  new best EPE 1.588 px -> runs\kitti_replay50\best.pt
+  epoch 152 step     0/60 loss 2.8025 lr 5.75e-05
+  epoch 152 step    50/60 loss 5.0664 lr 5.70e-05
+epoch 152 | loss 5.2707 | val EPE 1.586 px | D1 9.62% | 10s (ema)
+  new best EPE 1.586 px -> runs\kitti_replay50\best.pt
+  epoch 153 step     0/60 loss 5.0774 lr 5.69e-05
+  epoch 153 step    50/60 loss 5.1890 lr 5.65e-05
+epoch 153 | loss 5.3006 | val EPE 1.584 px | D1 9.59% | 11s (ema)
+  new best EPE 1.584 px -> runs\kitti_replay50\best.pt
+  epoch 154 step     0/60 loss 3.1371 lr 5.64e-05
+  epoch 154 step    50/60 loss 5.6397 lr 5.59e-05
+epoch 154 | loss 5.3571 | val EPE 1.583 px | D1 9.58% | 11s (ema)
+  new best EPE 1.583 px -> runs\kitti_replay50\best.pt
+  epoch 155 step     0/60 loss 9.2382 lr 5.58e-05
+  epoch 155 step    50/60 loss 5.1823 lr 5.53e-05
+epoch 155 | loss 4.9719 | val EPE 1.583 px | D1 9.57% | 11s (ema)
+  new best EPE 1.583 px -> runs\kitti_replay50\best.pt
+  epoch 156 step     0/60 loss 1.3972 lr 5.52e-05
+  epoch 156 step    50/60 loss 4.9169 lr 5.47e-05
+epoch 156 | loss 5.4372 | val EPE 1.582 px | D1 9.55% | 10s (ema)
+  new best EPE 1.582 px -> runs\kitti_replay50\best.pt
+  epoch 157 step     0/60 loss 2.4241 lr 5.46e-05
+  epoch 157 step    50/60 loss 4.8472 lr 5.41e-05
+epoch 157 | loss 4.8622 | val EPE 1.580 px | D1 9.53% | 10s (ema)
+  new best EPE 1.580 px -> runs\kitti_replay50\best.pt
+  epoch 158 step     0/60 loss 7.9608 lr 5.40e-05
+  epoch 158 step    50/60 loss 5.6780 lr 5.36e-05
+epoch 158 | loss 5.5798 | val EPE 1.579 px | D1 9.51% | 11s (ema)
+  new best EPE 1.579 px -> runs\kitti_replay50\best.pt
+  epoch 159 step     0/60 loss 3.8364 lr 5.35e-05
+  epoch 159 step    50/60 loss 5.5994 lr 5.30e-05
+epoch 159 | loss 5.3106 | val EPE 1.577 px | D1 9.50% | 10s (ema)
+  new best EPE 1.577 px -> runs\kitti_replay50\best.pt
+  epoch 160 step     0/60 loss 2.1176 lr 5.29e-05
+  epoch 160 step    50/60 loss 5.0476 lr 5.24e-05
+epoch 160 | loss 5.0166 | val EPE 1.576 px | D1 9.50% | 11s (ema)
+  new best EPE 1.576 px -> runs\kitti_replay50\best.pt
+  epoch 161 step     0/60 loss 2.5773 lr 5.23e-05
+  epoch 161 step    50/60 loss 5.2756 lr 5.18e-05
+epoch 161 | loss 5.2667 | val EPE 1.576 px | D1 9.49% | 11s (ema)
+  epoch 162 step     0/60 loss 2.0002 lr 5.17e-05
+  epoch 162 step    50/60 loss 5.1133 lr 5.12e-05
+epoch 162 | loss 5.3348 | val EPE 1.578 px | D1 9.49% | 10s (ema)
+  epoch 163 step     0/60 loss 2.1197 lr 5.11e-05
+  epoch 163 step    50/60 loss 5.4216 lr 5.07e-05
+epoch 163 | loss 5.3160 | val EPE 1.579 px | D1 9.48% | 10s (ema)
+  epoch 164 step     0/60 loss 5.0096 lr 5.06e-05
+  epoch 164 step    50/60 loss 5.6471 lr 5.01e-05
+epoch 164 | loss 5.7135 | val EPE 1.579 px | D1 9.47% | 12s (ema)
+  epoch 165 step     0/60 loss 6.5830 lr 5.00e-05
+  epoch 165 step    50/60 loss 5.2852 lr 4.95e-05
+epoch 165 | loss 5.1947 | val EPE 1.578 px | D1 9.47% | 12s (ema)
+  epoch 166 step     0/60 loss 2.1796 lr 4.94e-05
+  epoch 166 step    50/60 loss 4.8902 lr 4.89e-05
+epoch 166 | loss 4.9432 | val EPE 1.577 px | D1 9.46% | 11s (ema)
+  epoch 167 step     0/60 loss 5.2422 lr 4.88e-05
+  epoch 167 step    50/60 loss 5.3916 lr 4.83e-05
+epoch 167 | loss 5.7922 | val EPE 1.576 px | D1 9.45% | 11s (ema)
+  epoch 168 step     0/60 loss 2.1818 lr 4.82e-05
+  epoch 168 step    50/60 loss 5.0365 lr 4.78e-05
+epoch 168 | loss 5.1135 | val EPE 1.576 px | D1 9.46% | 11s (ema)
+  epoch 169 step     0/60 loss 4.6807 lr 4.77e-05
+  epoch 169 step    50/60 loss 4.9150 lr 4.72e-05
+epoch 169 | loss 4.9937 | val EPE 1.577 px | D1 9.46% | 12s (ema)
+  epoch 170 step     0/60 loss 4.2083 lr 4.71e-05
+  epoch 170 step    50/60 loss 5.5097 lr 4.66e-05
+epoch 170 | loss 5.3098 | val EPE 1.576 px | D1 9.46% | 11s (ema)
+  new best EPE 1.576 px -> runs\kitti_replay50\best.pt
+  epoch 171 step     0/60 loss 4.3708 lr 4.65e-05
+  epoch 171 step    50/60 loss 5.3702 lr 4.60e-05
+epoch 171 | loss 5.3643 | val EPE 1.576 px | D1 9.46% | 10s (ema)
+  new best EPE 1.576 px -> runs\kitti_replay50\best.pt
+  epoch 172 step     0/60 loss 3.7068 lr 4.59e-05
+  epoch 172 step    50/60 loss 5.0151 lr 4.54e-05
+epoch 172 | loss 4.9705 | val EPE 1.576 px | D1 9.46% | 10s (ema)
+  epoch 173 step     0/60 loss 8.4420 lr 4.53e-05
+  epoch 173 step    50/60 loss 4.8409 lr 4.49e-05
+epoch 173 | loss 4.8649 | val EPE 1.577 px | D1 9.45% | 10s (ema)
+  epoch 174 step     0/60 loss 4.8818 lr 4.48e-05
+  epoch 174 step    50/60 loss 5.1472 lr 4.43e-05
+epoch 174 | loss 5.2197 | val EPE 1.578 px | D1 9.44% | 10s (ema)
+  epoch 175 step     0/60 loss 11.1820 lr 4.42e-05
+  epoch 175 step    50/60 loss 5.3646 lr 4.37e-05
+epoch 175 | loss 5.3808 | val EPE 1.578 px | D1 9.43% | 11s (ema)
+  epoch 176 step     0/60 loss 3.5190 lr 4.36e-05
+  epoch 176 step    50/60 loss 5.0286 lr 4.31e-05
+epoch 176 | loss 5.1904 | val EPE 1.580 px | D1 9.43% | 11s (ema)
+  epoch 177 step     0/60 loss 4.2254 lr 4.30e-05
+  epoch 177 step    50/60 loss 5.2108 lr 4.25e-05
+epoch 177 | loss 5.3094 | val EPE 1.580 px | D1 9.42% | 11s (ema)
+  epoch 178 step     0/60 loss 2.7181 lr 4.24e-05
+  epoch 178 step    50/60 loss 5.1360 lr 4.20e-05
+epoch 178 | loss 5.0787 | val EPE 1.580 px | D1 9.42% | 10s (ema)
+  epoch 179 step     0/60 loss 6.3861 lr 4.19e-05
+  epoch 179 step    50/60 loss 4.6838 lr 4.14e-05
+epoch 179 | loss 4.7453 | val EPE 1.581 px | D1 9.42% | 10s (ema)
+  epoch 180 step     0/60 loss 1.9785 lr 4.13e-05
+  epoch 180 step    50/60 loss 4.6626 lr 4.08e-05
+epoch 180 | loss 4.8788 | val EPE 1.581 px | D1 9.42% | 10s (ema)
+  epoch 181 step     0/60 loss 6.6745 lr 4.07e-05
+  epoch 181 step    50/60 loss 5.2896 lr 4.03e-05
+epoch 181 | loss 5.4181 | val EPE 1.581 px | D1 9.43% | 10s (ema)
+  epoch 182 step     0/60 loss 6.6444 lr 4.02e-05
+  epoch 182 step    50/60 loss 5.1488 lr 3.97e-05
+epoch 182 | loss 5.2370 | val EPE 1.581 px | D1 9.44% | 10s (ema)
+  epoch 183 step     0/60 loss 11.3775 lr 3.96e-05
+  epoch 183 step    50/60 loss 5.3264 lr 3.91e-05
+epoch 183 | loss 5.2633 | val EPE 1.580 px | D1 9.43% | 10s (ema)
+  epoch 184 step     0/60 loss 4.9592 lr 3.90e-05
+  epoch 184 step    50/60 loss 4.8297 lr 3.85e-05
+epoch 184 | loss 4.7228 | val EPE 1.580 px | D1 9.43% | 10s (ema)
+  epoch 185 step     0/60 loss 4.7790 lr 3.85e-05
+  epoch 185 step    50/60 loss 4.6807 lr 3.80e-05
+epoch 185 | loss 4.7386 | val EPE 1.580 px | D1 9.43% | 10s (ema)
+  epoch 186 step     0/60 loss 6.7600 lr 3.79e-05
+  epoch 186 step    50/60 loss 5.2583 lr 3.74e-05
+epoch 186 | loss 5.2131 | val EPE 1.580 px | D1 9.44% | 10s (ema)
+  epoch 187 step     0/60 loss 2.1408 lr 3.73e-05
+  epoch 187 step    50/60 loss 4.8783 lr 3.69e-05
+epoch 187 | loss 5.0442 | val EPE 1.580 px | D1 9.44% | 10s (ema)
+  epoch 188 step     0/60 loss 1.4516 lr 3.68e-05
+  epoch 188 step    50/60 loss 5.1464 lr 3.63e-05
+epoch 188 | loss 5.0715 | val EPE 1.579 px | D1 9.44% | 10s (ema)
+  epoch 189 step     0/60 loss 4.4318 lr 3.62e-05
+  epoch 189 step    50/60 loss 5.4327 lr 3.57e-05
+epoch 189 | loss 5.3242 | val EPE 1.578 px | D1 9.43% | 11s (ema)
+  epoch 190 step     0/60 loss 9.1056 lr 3.56e-05
+  epoch 190 step    50/60 loss 5.6509 lr 3.52e-05
+epoch 190 | loss 5.4806 | val EPE 1.576 px | D1 9.42% | 11s (ema)
+  new best EPE 1.576 px -> runs\kitti_replay50\best.pt
+  epoch 191 step     0/60 loss 7.0000 lr 3.51e-05
+  epoch 191 step    50/60 loss 4.7697 lr 3.46e-05
+epoch 191 | loss 5.0418 | val EPE 1.573 px | D1 9.41% | 10s (ema)
+  new best EPE 1.573 px -> runs\kitti_replay50\best.pt
+  epoch 192 step     0/60 loss 5.6725 lr 3.45e-05
+  epoch 192 step    50/60 loss 5.4630 lr 3.41e-05
+epoch 192 | loss 5.4591 | val EPE 1.574 px | D1 9.41% | 10s (ema)
+  epoch 193 step     0/60 loss 6.5504 lr 3.40e-05
+  epoch 193 step    50/60 loss 4.8723 lr 3.35e-05
+epoch 193 | loss 5.2013 | val EPE 1.573 px | D1 9.41% | 10s (ema)
+  new best EPE 1.573 px -> runs\kitti_replay50\best.pt
+  epoch 194 step     0/60 loss 2.8013 lr 3.34e-05
+  epoch 194 step    50/60 loss 5.0928 lr 3.30e-05
+epoch 194 | loss 4.8878 | val EPE 1.572 px | D1 9.40% | 10s (ema)
+  new best EPE 1.572 px -> runs\kitti_replay50\best.pt
+  epoch 195 step     0/60 loss 7.3131 lr 3.29e-05
+  epoch 195 step    50/60 loss 4.8621 lr 3.24e-05
+epoch 195 | loss 4.8167 | val EPE 1.570 px | D1 9.40% | 10s (ema)
+  new best EPE 1.570 px -> runs\kitti_replay50\best.pt
+  epoch 196 step     0/60 loss 7.4685 lr 3.23e-05
+  epoch 196 step    50/60 loss 5.3785 lr 3.19e-05
+epoch 196 | loss 5.2470 | val EPE 1.569 px | D1 9.39% | 10s (ema)
+  new best EPE 1.569 px -> runs\kitti_replay50\best.pt
+  epoch 197 step     0/60 loss 10.6568 lr 3.18e-05
+  epoch 197 step    50/60 loss 5.0391 lr 3.13e-05
+epoch 197 | loss 5.0440 | val EPE 1.567 px | D1 9.38% | 10s (ema)
+  new best EPE 1.567 px -> runs\kitti_replay50\best.pt
+  epoch 198 step     0/60 loss 4.2047 lr 3.13e-05
+  epoch 198 step    50/60 loss 5.4188 lr 3.08e-05
+epoch 198 | loss 5.3002 | val EPE 1.565 px | D1 9.38% | 10s (ema)
+  new best EPE 1.565 px -> runs\kitti_replay50\best.pt
+  epoch 199 step     0/60 loss 3.1355 lr 3.07e-05
+  epoch 199 step    50/60 loss 4.7106 lr 3.03e-05
+epoch 199 | loss 4.7343 | val EPE 1.564 px | D1 9.37% | 10s (ema)
+  new best EPE 1.564 px -> runs\kitti_replay50\best.pt
+  epoch 200 step     0/60 loss 5.4850 lr 3.02e-05
+  epoch 200 step    50/60 loss 4.9018 lr 2.97e-05
+epoch 200 | loss 4.7779 | val EPE 1.562 px | D1 9.37% | 10s (ema)
+  new best EPE 1.562 px -> runs\kitti_replay50\best.pt
+  epoch 201 step     0/60 loss 3.9168 lr 2.96e-05
+  epoch 201 step    50/60 loss 5.0876 lr 2.92e-05
+epoch 201 | loss 5.1157 | val EPE 1.561 px | D1 9.36% | 10s (ema)
+  new best EPE 1.561 px -> runs\kitti_replay50\best.pt
+  epoch 202 step     0/60 loss 7.9816 lr 2.91e-05
+  epoch 202 step    50/60 loss 5.0696 lr 2.87e-05
+epoch 202 | loss 5.1645 | val EPE 1.562 px | D1 9.36% | 10s (ema)
+  epoch 203 step     0/60 loss 7.5847 lr 2.86e-05
+  epoch 203 step    50/60 loss 5.2717 lr 2.82e-05
+epoch 203 | loss 5.0181 | val EPE 1.562 px | D1 9.36% | 10s (ema)
+  epoch 204 step     0/60 loss 3.6819 lr 2.81e-05
+  epoch 204 step    50/60 loss 5.3370 lr 2.76e-05
+epoch 204 | loss 5.2056 | val EPE 1.563 px | D1 9.36% | 10s (ema)
+  epoch 205 step     0/60 loss 4.9979 lr 2.75e-05
+  epoch 205 step    50/60 loss 4.3093 lr 2.71e-05
+epoch 205 | loss 4.8918 | val EPE 1.563 px | D1 9.36% | 10s (ema)
+  epoch 206 step     0/60 loss 1.9456 lr 2.70e-05
+  epoch 206 step    50/60 loss 4.9189 lr 2.66e-05
+epoch 206 | loss 5.0181 | val EPE 1.563 px | D1 9.35% | 10s (ema)
+  epoch 207 step     0/60 loss 3.7443 lr 2.65e-05
+  epoch 207 step    50/60 loss 5.2593 lr 2.61e-05
+epoch 207 | loss 4.8962 | val EPE 1.562 px | D1 9.35% | 10s (ema)
+  epoch 208 step     0/60 loss 4.2046 lr 2.60e-05
+  epoch 208 step    50/60 loss 4.9646 lr 2.56e-05
+epoch 208 | loss 4.8858 | val EPE 1.562 px | D1 9.35% | 10s (ema)
+  epoch 209 step     0/60 loss 4.6106 lr 2.55e-05
+  epoch 209 step    50/60 loss 5.0418 lr 2.51e-05
+epoch 209 | loss 4.9422 | val EPE 1.562 px | D1 9.35% | 10s (ema)
+  epoch 210 step     0/60 loss 2.0371 lr 2.50e-05
+  epoch 210 step    50/60 loss 5.1470 lr 2.46e-05
+epoch 210 | loss 5.0772 | val EPE 1.562 px | D1 9.35% | 10s (ema)
+  epoch 211 step     0/60 loss 5.6450 lr 2.45e-05
+  epoch 211 step    50/60 loss 4.9779 lr 2.41e-05
+epoch 211 | loss 4.9069 | val EPE 1.561 px | D1 9.34% | 10s (ema)
+  new best EPE 1.561 px -> runs\kitti_replay50\best.pt
+  epoch 212 step     0/60 loss 12.3716 lr 2.40e-05
+  epoch 212 step    50/60 loss 4.6641 lr 2.36e-05
+epoch 212 | loss 4.7888 | val EPE 1.561 px | D1 9.33% | 10s (ema)
+  new best EPE 1.561 px -> runs\kitti_replay50\best.pt
+  epoch 213 step     0/60 loss 4.2386 lr 2.35e-05
+  epoch 213 step    50/60 loss 5.0981 lr 2.31e-05
+epoch 213 | loss 5.0260 | val EPE 1.561 px | D1 9.33% | 10s (ema)
+  new best EPE 1.561 px -> runs\kitti_replay50\best.pt
+  epoch 214 step     0/60 loss 2.7357 lr 2.30e-05
+  epoch 214 step    50/60 loss 5.4813 lr 2.26e-05
+epoch 214 | loss 5.1801 | val EPE 1.561 px | D1 9.32% | 11s (ema)
+  epoch 215 step     0/60 loss 2.0801 lr 2.25e-05
+  epoch 215 step    50/60 loss 4.5137 lr 2.21e-05
+epoch 215 | loss 4.7494 | val EPE 1.561 px | D1 9.32% | 11s (ema)
+  epoch 216 step     0/60 loss 7.5017 lr 2.20e-05
+  epoch 216 step    50/60 loss 4.5697 lr 2.16e-05
+epoch 216 | loss 4.4940 | val EPE 1.561 px | D1 9.32% | 11s (ema)
+  epoch 217 step     0/60 loss 1.8622 lr 2.15e-05
+  epoch 217 step    50/60 loss 5.0514 lr 2.11e-05
+epoch 217 | loss 5.0170 | val EPE 1.561 px | D1 9.32% | 11s (ema)
+  epoch 218 step     0/60 loss 3.3051 lr 2.11e-05
+  epoch 218 step    50/60 loss 5.2434 lr 2.07e-05
+epoch 218 | loss 5.0222 | val EPE 1.560 px | D1 9.32% | 10s (ema)
+  new best EPE 1.560 px -> runs\kitti_replay50\best.pt
+  epoch 219 step     0/60 loss 3.1880 lr 2.06e-05
+  epoch 219 step    50/60 loss 5.2730 lr 2.02e-05
+epoch 219 | loss 5.2757 | val EPE 1.560 px | D1 9.32% | 10s (ema)
+  new best EPE 1.560 px -> runs\kitti_replay50\best.pt
+  epoch 220 step     0/60 loss 8.5018 lr 2.01e-05
+  epoch 220 step    50/60 loss 4.3373 lr 1.97e-05
+epoch 220 | loss 4.5297 | val EPE 1.561 px | D1 9.32% | 10s (ema)
+  epoch 221 step     0/60 loss 6.5834 lr 1.97e-05
+  epoch 221 step    50/60 loss 4.8622 lr 1.93e-05
+epoch 221 | loss 4.9047 | val EPE 1.560 px | D1 9.31% | 10s (ema)
+  epoch 222 step     0/60 loss 4.8406 lr 1.92e-05
+  epoch 222 step    50/60 loss 5.4127 lr 1.88e-05
+epoch 222 | loss 5.1422 | val EPE 1.560 px | D1 9.31% | 10s (ema)
+  epoch 223 step     0/60 loss 7.4950 lr 1.87e-05
+  epoch 223 step    50/60 loss 4.8531 lr 1.84e-05
+epoch 223 | loss 4.8005 | val EPE 1.561 px | D1 9.31% | 10s (ema)
+  epoch 224 step     0/60 loss 1.4363 lr 1.83e-05
+  epoch 224 step    50/60 loss 4.7011 lr 1.79e-05
+epoch 224 | loss 4.8181 | val EPE 1.561 px | D1 9.32% | 10s (ema)
+  epoch 225 step     0/60 loss 5.2779 lr 1.78e-05
+  epoch 225 step    50/60 loss 4.8992 lr 1.75e-05
+epoch 225 | loss 5.0422 | val EPE 1.561 px | D1 9.32% | 10s (ema)
+  epoch 226 step     0/60 loss 3.5697 lr 1.74e-05
+  epoch 226 step    50/60 loss 4.6544 lr 1.70e-05
+epoch 226 | loss 4.7938 | val EPE 1.561 px | D1 9.33% | 10s (ema)
+  epoch 227 step     0/60 loss 8.0463 lr 1.70e-05
+  epoch 227 step    50/60 loss 5.1665 lr 1.66e-05
+epoch 227 | loss 5.3670 | val EPE 1.562 px | D1 9.33% | 10s (ema)
+  epoch 228 step     0/60 loss 1.7551 lr 1.65e-05
+  epoch 228 step    50/60 loss 4.5405 lr 1.62e-05
+epoch 228 | loss 4.6341 | val EPE 1.563 px | D1 9.33% | 10s (ema)
+  epoch 229 step     0/60 loss 3.5075 lr 1.61e-05
+  epoch 229 step    50/60 loss 5.3451 lr 1.57e-05
+epoch 229 | loss 5.1057 | val EPE 1.564 px | D1 9.33% | 10s (ema)
+  epoch 230 step     0/60 loss 12.0960 lr 1.57e-05
+  epoch 230 step    50/60 loss 4.9046 lr 1.53e-05
+epoch 230 | loss 4.9117 | val EPE 1.563 px | D1 9.33% | 11s (ema)
+  epoch 231 step     0/60 loss 5.3414 lr 1.53e-05
+  epoch 231 step    50/60 loss 4.9191 lr 1.49e-05
+epoch 231 | loss 5.2455 | val EPE 1.563 px | D1 9.33% | 11s (ema)
+  epoch 232 step     0/60 loss 5.3341 lr 1.48e-05
+  epoch 232 step    50/60 loss 5.3101 lr 1.45e-05
+epoch 232 | loss 5.1288 | val EPE 1.563 px | D1 9.32% | 11s (ema)
+  epoch 233 step     0/60 loss 3.0417 lr 1.44e-05
+  epoch 233 step    50/60 loss 4.8039 lr 1.41e-05
+epoch 233 | loss 5.0764 | val EPE 1.561 px | D1 9.33% | 11s (ema)
+  epoch 234 step     0/60 loss 4.8015 lr 1.40e-05
+  epoch 234 step    50/60 loss 4.6023 lr 1.37e-05
+epoch 234 | loss 4.6955 | val EPE 1.561 px | D1 9.33% | 10s (ema)
+  epoch 235 step     0/60 loss 1.4575 lr 1.36e-05
+  epoch 235 step    50/60 loss 5.2782 lr 1.33e-05
+epoch 235 | loss 5.0439 | val EPE 1.561 px | D1 9.34% | 11s (ema)
+  epoch 236 step     0/60 loss 6.4126 lr 1.32e-05
+  epoch 236 step    50/60 loss 5.4595 lr 1.29e-05
+epoch 236 | loss 5.4331 | val EPE 1.562 px | D1 9.34% | 11s (ema)
+  epoch 237 step     0/60 loss 3.8161 lr 1.28e-05
+  epoch 237 step    50/60 loss 4.8935 lr 1.25e-05
+epoch 237 | loss 4.8361 | val EPE 1.561 px | D1 9.33% | 10s (ema)
+  epoch 238 step     0/60 loss 5.3547 lr 1.24e-05
+  epoch 238 step    50/60 loss 4.6201 lr 1.21e-05
+epoch 238 | loss 4.6832 | val EPE 1.561 px | D1 9.33% | 10s (ema)
+  epoch 239 step     0/60 loss 7.7682 lr 1.21e-05
+  epoch 239 step    50/60 loss 4.5966 lr 1.17e-05
+epoch 239 | loss 4.9615 | val EPE 1.562 px | D1 9.33% | 11s (ema)
+  epoch 240 step     0/60 loss 12.6820 lr 1.17e-05
+  epoch 240 step    50/60 loss 4.8274 lr 1.14e-05
+epoch 240 | loss 5.0262 | val EPE 1.562 px | D1 9.33% | 10s (ema)
+  epoch 241 step     0/60 loss 6.2685 lr 1.13e-05
+  epoch 241 step    50/60 loss 4.7341 lr 1.10e-05
+epoch 241 | loss 5.0788 | val EPE 1.562 px | D1 9.33% | 11s (ema)
+  epoch 242 step     0/60 loss 2.9738 lr 1.09e-05
+  epoch 242 step    50/60 loss 5.2649 lr 1.06e-05
+epoch 242 | loss 5.3113 | val EPE 1.563 px | D1 9.33% | 10s (ema)
+  epoch 243 step     0/60 loss 3.5517 lr 1.06e-05
+  epoch 243 step    50/60 loss 4.7745 lr 1.03e-05
+epoch 243 | loss 4.8356 | val EPE 1.563 px | D1 9.33% | 10s (ema)
+  epoch 244 step     0/60 loss 7.0683 lr 1.02e-05
+  epoch 244 step    50/60 loss 4.5974 lr 9.94e-06
+epoch 244 | loss 4.6602 | val EPE 1.563 px | D1 9.33% | 10s (ema)
+  epoch 245 step     0/60 loss 6.5261 lr 9.88e-06
+  epoch 245 step    50/60 loss 4.4489 lr 9.60e-06
+epoch 245 | loss 4.5685 | val EPE 1.564 px | D1 9.33% | 11s (ema)
+  epoch 246 step     0/60 loss 3.4352 lr 9.54e-06
+  epoch 246 step    50/60 loss 4.5192 lr 9.26e-06
+epoch 246 | loss 4.7052 | val EPE 1.564 px | D1 9.32% | 11s (ema)
+  epoch 247 step     0/60 loss 3.0406 lr 9.20e-06
+  epoch 247 step    50/60 loss 5.0539 lr 8.92e-06
+epoch 247 | loss 4.8784 | val EPE 1.565 px | D1 9.32% | 10s (ema)
+  epoch 248 step     0/60 loss 5.0172 lr 8.87e-06
+  epoch 248 step    50/60 loss 4.8202 lr 8.59e-06
+epoch 248 | loss 4.9117 | val EPE 1.564 px | D1 9.32% | 10s (ema)
+  epoch 249 step     0/60 loss 2.8947 lr 8.54e-06
+  epoch 249 step    50/60 loss 5.1540 lr 8.27e-06
+epoch 249 | loss 4.9675 | val EPE 1.565 px | D1 9.32% | 10s (ema)
+  epoch 250 step     0/60 loss 8.9264 lr 8.22e-06
+  epoch 250 step    50/60 loss 4.7314 lr 7.95e-06
+epoch 250 | loss 4.8041 | val EPE 1.565 px | D1 9.32% | 10s (ema)
+  epoch 251 step     0/60 loss 3.5410 lr 7.90e-06
+  epoch 251 step    50/60 loss 5.3720 lr 7.64e-06
+epoch 251 | loss 5.3291 | val EPE 1.564 px | D1 9.32% | 10s (ema)
+  epoch 252 step     0/60 loss 2.2881 lr 7.59e-06
+  epoch 252 step    50/60 loss 4.8365 lr 7.33e-06
+epoch 252 | loss 4.9343 | val EPE 1.563 px | D1 9.31% | 11s (ema)
+  epoch 253 step     0/60 loss 2.5954 lr 7.28e-06
+  epoch 253 step    50/60 loss 4.2289 lr 7.03e-06
+epoch 253 | loss 4.3480 | val EPE 1.563 px | D1 9.32% | 10s (ema)
+  epoch 254 step     0/60 loss 10.1164 lr 6.98e-06
+  epoch 254 step    50/60 loss 5.4173 lr 6.74e-06
+epoch 254 | loss 5.2574 | val EPE 1.562 px | D1 9.31% | 10s (ema)
+  epoch 255 step     0/60 loss 2.2894 lr 6.69e-06
+  epoch 255 step    50/60 loss 5.1539 lr 6.45e-06
+epoch 255 | loss 4.9764 | val EPE 1.563 px | D1 9.32% | 11s (ema)
+  epoch 256 step     0/60 loss 1.4916 lr 6.40e-06
+  epoch 256 step    50/60 loss 5.0463 lr 6.17e-06
+epoch 256 | loss 5.0847 | val EPE 1.563 px | D1 9.32% | 11s (ema)
+  epoch 257 step     0/60 loss 9.9392 lr 6.12e-06
+  epoch 257 step    50/60 loss 5.2706 lr 5.89e-06
+epoch 257 | loss 5.2407 | val EPE 1.564 px | D1 9.32% | 11s (ema)
+  epoch 258 step     0/60 loss 6.2588 lr 5.84e-06
+  epoch 258 step    50/60 loss 4.5478 lr 5.62e-06
+epoch 258 | loss 4.5196 | val EPE 1.564 px | D1 9.32% | 11s (ema)
+  epoch 259 step     0/60 loss 10.4823 lr 5.57e-06
+  epoch 259 step    50/60 loss 5.2482 lr 5.35e-06
+epoch 259 | loss 4.8689 | val EPE 1.563 px | D1 9.32% | 11s (ema)
+  epoch 260 step     0/60 loss 2.7317 lr 5.31e-06
+  epoch 260 step    50/60 loss 4.4497 lr 5.09e-06
+epoch 260 | loss 4.6333 | val EPE 1.563 px | D1 9.31% | 11s (ema)
+  epoch 261 step     0/60 loss 5.3759 lr 5.05e-06
+  epoch 261 step    50/60 loss 5.1213 lr 4.84e-06
+epoch 261 | loss 5.0966 | val EPE 1.563 px | D1 9.31% | 11s (ema)
+  epoch 262 step     0/60 loss 4.2175 lr 4.80e-06
+  epoch 262 step    50/60 loss 4.8589 lr 4.60e-06
+epoch 262 | loss 4.8498 | val EPE 1.563 px | D1 9.31% | 11s (ema)
+  epoch 263 step     0/60 loss 2.2273 lr 4.55e-06
+  epoch 263 step    50/60 loss 4.8380 lr 4.35e-06
+epoch 263 | loss 4.9311 | val EPE 1.563 px | D1 9.31% | 11s (ema)
+  epoch 264 step     0/60 loss 3.3072 lr 4.32e-06
+  epoch 264 step    50/60 loss 4.9493 lr 4.12e-06
+epoch 264 | loss 4.7415 | val EPE 1.563 px | D1 9.31% | 11s (ema)
+  epoch 265 step     0/60 loss 2.0845 lr 4.08e-06
+  epoch 265 step    50/60 loss 5.1534 lr 3.89e-06
+epoch 265 | loss 5.1405 | val EPE 1.562 px | D1 9.31% | 11s (ema)
+  epoch 266 step     0/60 loss 5.1775 lr 3.85e-06
+  epoch 266 step    50/60 loss 4.3943 lr 3.67e-06
+epoch 266 | loss 4.4751 | val EPE 1.562 px | D1 9.30% | 11s (ema)
+  epoch 267 step     0/60 loss 9.7099 lr 3.63e-06
+  epoch 267 step    50/60 loss 4.6892 lr 3.45e-06
+epoch 267 | loss 5.0144 | val EPE 1.561 px | D1 9.30% | 11s (ema)
+  epoch 268 step     0/60 loss 6.0355 lr 3.42e-06
+  epoch 268 step    50/60 loss 4.9477 lr 3.25e-06
+epoch 268 | loss 5.0617 | val EPE 1.561 px | D1 9.30% | 11s (ema)
+  epoch 269 step     0/60 loss 7.4871 lr 3.21e-06
+  epoch 269 step    50/60 loss 4.5836 lr 3.04e-06
+epoch 269 | loss 4.5337 | val EPE 1.560 px | D1 9.30% | 12s (ema)
+  epoch 270 step     0/60 loss 5.7543 lr 3.01e-06
+  epoch 270 step    50/60 loss 5.2145 lr 2.85e-06
+epoch 270 | loss 5.2319 | val EPE 1.560 px | D1 9.31% | 11s (ema)
+  epoch 271 step     0/60 loss 2.2919 lr 2.81e-06
+  epoch 271 step    50/60 loss 4.5756 lr 2.66e-06
+epoch 271 | loss 4.6579 | val EPE 1.559 px | D1 9.30% | 11s (ema)
+  new best EPE 1.559 px -> runs\kitti_replay50\best.pt
+  epoch 272 step     0/60 loss 4.8725 lr 2.62e-06
+  epoch 272 step    50/60 loss 5.0468 lr 2.47e-06
+epoch 272 | loss 5.0040 | val EPE 1.559 px | D1 9.30% | 11s (ema)
+  new best EPE 1.559 px -> runs\kitti_replay50\best.pt
+  epoch 273 step     0/60 loss 2.5234 lr 2.44e-06
+  epoch 273 step    50/60 loss 5.1472 lr 2.29e-06
+epoch 273 | loss 5.1731 | val EPE 1.558 px | D1 9.30% | 11s (ema)
+  new best EPE 1.558 px -> runs\kitti_replay50\best.pt
+  epoch 274 step     0/60 loss 8.9651 lr 2.27e-06
+  epoch 274 step    50/60 loss 4.9100 lr 2.12e-06
+epoch 274 | loss 5.0588 | val EPE 1.558 px | D1 9.30% | 12s (ema)
+  new best EPE 1.558 px -> runs\kitti_replay50\best.pt
+  epoch 275 step     0/60 loss 7.9837 lr 2.10e-06
+  epoch 275 step    50/60 loss 4.7506 lr 1.96e-06
+epoch 275 | loss 4.7186 | val EPE 1.558 px | D1 9.30% | 11s (ema)
+  new best EPE 1.558 px -> runs\kitti_replay50\best.pt
+  epoch 276 step     0/60 loss 7.1384 lr 1.93e-06
+  epoch 276 step    50/60 loss 5.0673 lr 1.80e-06
+epoch 276 | loss 5.1537 | val EPE 1.558 px | D1 9.30% | 11s (ema)
+  new best EPE 1.558 px -> runs\kitti_replay50\best.pt
+  epoch 277 step     0/60 loss 5.2868 lr 1.78e-06
+  epoch 277 step    50/60 loss 4.6192 lr 1.65e-06
+epoch 277 | loss 4.7580 | val EPE 1.558 px | D1 9.30% | 11s (ema)
+  epoch 278 step     0/60 loss 5.8867 lr 1.62e-06
+  epoch 278 step    50/60 loss 4.4733 lr 1.50e-06
+epoch 278 | loss 4.8339 | val EPE 1.557 px | D1 9.29% | 11s (ema)
+  new best EPE 1.557 px -> runs\kitti_replay50\best.pt
+  epoch 279 step     0/60 loss 6.3554 lr 1.48e-06
+  epoch 279 step    50/60 loss 4.9135 lr 1.37e-06
+epoch 279 | loss 5.1839 | val EPE 1.557 px | D1 9.29% | 11s (ema)
+  new best EPE 1.557 px -> runs\kitti_replay50\best.pt
+  epoch 280 step     0/60 loss 2.1024 lr 1.34e-06
+  epoch 280 step    50/60 loss 4.4225 lr 1.23e-06
+epoch 280 | loss 4.6696 | val EPE 1.557 px | D1 9.29% | 11s (ema)
+  new best EPE 1.557 px -> runs\kitti_replay50\best.pt
+  epoch 281 step     0/60 loss 4.1062 lr 1.21e-06
+  epoch 281 step    50/60 loss 4.7638 lr 1.11e-06
+epoch 281 | loss 4.6924 | val EPE 1.557 px | D1 9.29% | 11s (ema)
+  epoch 282 step     0/60 loss 15.4636 lr 1.09e-06
+  epoch 282 step    50/60 loss 5.1084 lr 9.91e-07
+epoch 282 | loss 5.1281 | val EPE 1.557 px | D1 9.29% | 11s (ema)
+  epoch 283 step     0/60 loss 5.3905 lr 9.72e-07
+  epoch 283 step    50/60 loss 5.1438 lr 8.79e-07
+epoch 283 | loss 5.0498 | val EPE 1.558 px | D1 9.30% | 11s (ema)
+  epoch 284 step     0/60 loss 5.5274 lr 8.61e-07
+  epoch 284 step    50/60 loss 5.3518 lr 7.74e-07
+epoch 284 | loss 5.1145 | val EPE 1.558 px | D1 9.29% | 11s (ema)
+  epoch 285 step     0/60 loss 4.4495 lr 7.57e-07
+  epoch 285 step    50/60 loss 5.1389 lr 6.75e-07
+epoch 285 | loss 5.2645 | val EPE 1.558 px | D1 9.29% | 11s (ema)
+  epoch 286 step     0/60 loss 1.8950 lr 6.59e-07
+  epoch 286 step    50/60 loss 4.5904 lr 5.83e-07
+epoch 286 | loss 4.8075 | val EPE 1.557 px | D1 9.29% | 11s (ema)
+  epoch 287 step     0/60 loss 3.5217 lr 5.68e-07
+  epoch 287 step    50/60 loss 4.4614 lr 4.98e-07
+epoch 287 | loss 4.6019 | val EPE 1.557 px | D1 9.29% | 11s (ema)
+  epoch 288 step     0/60 loss 4.6819 lr 4.84e-07
+  epoch 288 step    50/60 loss 4.9419 lr 4.19e-07
+epoch 288 | loss 4.7814 | val EPE 1.557 px | D1 9.29% | 12s (ema)
+  epoch 289 step     0/60 loss 4.3055 lr 4.07e-07
+  epoch 289 step    50/60 loss 4.9415 lr 3.48e-07
+epoch 289 | loss 4.8713 | val EPE 1.557 px | D1 9.28% | 11s (ema)
+  epoch 290 step     0/60 loss 3.3295 lr 3.36e-07
+  epoch 290 step    50/60 loss 4.7863 lr 2.82e-07
+epoch 290 | loss 4.6658 | val EPE 1.557 px | D1 9.28% | 11s (ema)
+  epoch 291 step     0/60 loss 4.4923 lr 2.72e-07
+  epoch 291 step    50/60 loss 5.1299 lr 2.24e-07
+epoch 291 | loss 5.1975 | val EPE 1.557 px | D1 9.28% | 12s (ema)
+  epoch 292 step     0/60 loss 1.4884 lr 2.15e-07
+  epoch 292 step    50/60 loss 4.4079 lr 1.73e-07
+epoch 292 | loss 4.5055 | val EPE 1.557 px | D1 9.28% | 12s (ema)
+  epoch 293 step     0/60 loss 6.2307 lr 1.65e-07
+  epoch 293 step    50/60 loss 4.8170 lr 1.28e-07
+epoch 293 | loss 4.7172 | val EPE 1.557 px | D1 9.28% | 11s (ema)
+  epoch 294 step     0/60 loss 4.0702 lr 1.21e-07
+  epoch 294 step    50/60 loss 4.7144 lr 8.96e-08
+epoch 294 | loss 4.7796 | val EPE 1.557 px | D1 9.28% | 11s (ema)
+  epoch 295 step     0/60 loss 17.4523 lr 8.39e-08
+  epoch 295 step    50/60 loss 5.1246 lr 5.82e-08
+epoch 295 | loss 5.2000 | val EPE 1.557 px | D1 9.28% | 11s (ema)
+  epoch 296 step     0/60 loss 2.8212 lr 5.36e-08
+  epoch 296 step    50/60 loss 5.0334 lr 3.36e-08
+epoch 296 | loss 5.1352 | val EPE 1.557 px | D1 9.28% | 11s (ema)
+  epoch 297 step     0/60 loss 5.4008 lr 3.02e-08
+  epoch 297 step    50/60 loss 5.1265 lr 1.58e-08
+epoch 297 | loss 5.1003 | val EPE 1.557 px | D1 9.27% | 11s (ema)
+  new best EPE 1.557 px -> runs\kitti_replay50\best.pt
+  epoch 298 step     0/60 loss 1.8736 lr 1.35e-08
+  epoch 298 step    50/60 loss 4.3392 lr 4.75e-09
+epoch 298 | loss 4.5970 | val EPE 1.556 px | D1 9.27% | 11s (ema)
+  new best EPE 1.556 px -> runs\kitti_replay50\best.pt
+  epoch 299 step     0/60 loss 2.0841 lr 3.56e-09
+  epoch 299 step    50/60 loss 5.0645 lr 4.60e-10
+epoch 299 | loss 4.9317 | val EPE 1.556 px | D1 9.27% | 11s (ema)
+
+done. best val EPE 1.556 px
+reference: Hailo stereonet reports 8.223 float / 10.3 quantized on KITTI

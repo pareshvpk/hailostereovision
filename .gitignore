@@ -1,0 +1,26 @@
+# Python
+.venv/
+__pycache__/
+*.pyc
+
+# Datasets (large; KITTI/SceneFlow are CC BY-NC-SA — do not redistribute)
+data/
+samples/
+
+# Model artifacts and calibration (large binaries)
+artifacts/
+
+# Training checkpoints (large); keep the small best.json + *_train.log records
+runs/**/*.pt
+runs/.thermal_rest_until
+
+# Vendored Hailo Dataflow Compiler wheel + generated build outputs
+deploy/vendor/
+deploy/build/
+
+# Hailo SDK logs at repo root
+/*.log
+
+# OS / editor cruft
+.DS_Store
+Thumbs.db

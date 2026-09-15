@@ -1,0 +1,53 @@
+#!/usr/bin/env bash
+# Run a script under the DFC venv with the environment it needs.
+#
+#     ./deploy/hailo-py deploy/dfc_flow.py all
+#     HAILO_FORCE_CPU=1 ./deploy/hailo-py deploy/dfc_flow.py optimize
+#
+# Three things this sets up:
+#
+# 1. PYTHONPATH cleared. This machine exports a ROS Humble overlay into every
+#    shell, and those paths sort AHEAD of the venv's site-packages. The DFC
+#    pins protobuf==3.20.3 and numpy==1.26.4; letting ROS shadow them breaks
+#    the install in confusing ways.
+#
+# 2. XLA_FLAGS. The DFC quantizes through TensorFlow, which JIT-compiles on the
+#    GPU and needs CUDA's libdevice.10.bc. There is no CUDA toolkit on this
+#    machine and the DFC's dependency set installs every nvidia-*-cu12 runtime
+#    package EXCEPT nvidia-cuda-nvcc-cu12, which is the one that ships it.
+#    Without this, optimize dies at the first activation with
+#    "libdevice not found at ./libdevice.10.bc".
+#
+#    Rather than add a package to a tightly pinned environment, this points XLA
+#    at a shim directory whose nvvm/libdevice/libdevice.10.bc symlinks to the
+#    copy Triton already installed as a torch dependency. Recreate with:
+#
+#      mkdir -p "$VENV/cuda-data/nvvm/libdevice"
+#      ln -sf "$VENV"/lib/python3.10/site-packages/triton/backends/nvidia/lib/libdevice.10.bc \
+#             "$VENV/cuda-data/nvvm/libdevice/"
+#
+# 3. HAILO_FORCE_CPU=1 hides the GPU entirely. Slower, but it sidesteps the
+#    whole JIT path if the shim ever stops being enough.
+set -euo pipefail
+
+VENV="$HOME/.venvs/hailo-dfc"
+CUDA_DATA="$VENV/cuda-data"
+
+if [[ ! -f "$CUDA_DATA/nvvm/libdevice/libdevice.10.bc" ]]; then
+    echo "hailo-py: warning: libdevice shim missing at $CUDA_DATA" >&2
+    echo "          GPU quantization will fail; see the comment in this file." >&2
+fi
+
+export XLA_FLAGS="--xla_gpu_cuda_data_dir=$CUDA_DATA${XLA_FLAGS:+ $XLA_FLAGS}"
+
+# Let TF grow its allocation instead of reserving the whole card at startup.
+# QFT on this graph is close to the 8 GB limit; pre-reserving everything makes
+# a tight fit into a fragmented one.
+export TF_FORCE_GPU_ALLOW_GROWTH=true
+
+if [[ "${HAILO_FORCE_CPU:-0}" == "1" ]]; then
+    export CUDA_VISIBLE_DEVICES=""
+    echo "hailo-py: GPU hidden (HAILO_FORCE_CPU=1)" >&2
+fi
+
+exec env -u PYTHONPATH "$VENV/bin/python" "$@"

@@ -1,0 +1,506 @@
+<title>Hailo StereoNet Teardown</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=JetBrains+Mono:wght@400;500;700&display=swap">
+
+<style>
+:root{
+  --ground:#EEF1F4; --surface:#FFFFFF; --surface-2:#F6F8FA;
+  --ink:#0E1519; --ink-2:#4C5A63; --ink-3:#78868F;
+  --rule:#D2DAE0; --rule-soft:#E3E9ED;
+  --accent:#0D6E6E; --accent-soft:#D8E9E7;
+  --critical:#A32015; --major:#8A5300; --minor:#41606F; --doc:#5B4B8A;
+  --critical-bg:#F7E3E0; --major-bg:#F6EBDA; --minor-bg:#E2EAEF; --doc-bg:#E9E5F4;
+  --bar:#0D6E6E; --bar-soft:#8FBDBB;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --ground:#0B1114; --surface:#131C21; --surface-2:#172228;
+    --ink:#E5ECF0; --ink-2:#9FB0B9; --ink-3:#71838C;
+    --rule:#25343A; --rule-soft:#1D2A30;
+    --accent:#4FB8B1; --accent-soft:#12312F;
+    --critical:#F08A80; --major:#DFA93F; --minor:#9BB4C0; --doc:#AC9AE2;
+    --critical-bg:#2E1512; --major-bg:#2B2009; --minor-bg:#18262C; --doc-bg:#20193A;
+    --bar:#4FB8B1; --bar-soft:#2A5C5A;
+  }
+}
+:root[data-theme="dark"]{
+  --ground:#0B1114; --surface:#131C21; --surface-2:#172228;
+  --ink:#E5ECF0; --ink-2:#9FB0B9; --ink-3:#71838C;
+  --rule:#25343A; --rule-soft:#1D2A30;
+  --accent:#4FB8B1; --accent-soft:#12312F;
+  --critical:#F08A80; --major:#DFA93F; --minor:#9BB4C0; --doc:#AC9AE2;
+  --critical-bg:#2E1512; --major-bg:#2B2009; --minor-bg:#18262C; --doc-bg:#20193A;
+  --bar:#4FB8B1; --bar-soft:#2A5C5A;
+}
+
+*{box-sizing:border-box}
+body{
+  background:var(--ground); color:var(--ink);
+  font-family:"Source Serif 4",Georgia,"Times New Roman",serif;
+  font-size:17px; line-height:1.62; margin:0;
+  -webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:1120px; margin:0 auto; padding:0 28px 96px}
+.col{max-width:680px}
+h1,h2,h3,.mono,.eyebrow,th,.chip,.stat-n{font-family:Archivo,"Helvetica Neue",Arial,sans-serif}
+.mono,code,pre,.num,td.n,.stat-n{font-family:"JetBrains Mono",ui-monospace,Menlo,Consolas,monospace}
+.num,td.n,.stat-n,table{font-variant-numeric:tabular-nums}
+
+/* ---------- masthead ---------- */
+header{padding:64px 0 34px; border-bottom:1px solid var(--rule)}
+.eyebrow{
+  font-size:11.5px; font-weight:600; letter-spacing:.16em; text-transform:uppercase;
+  color:var(--accent); margin:0 0 18px;
+}
+h1{
+  font-size:clamp(38px,6vw,62px); line-height:1.02; font-weight:700;
+  letter-spacing:-.025em; margin:0 0 20px; text-wrap:balance;
+}
+.standfirst{font-size:20px; line-height:1.5; color:var(--ink-2); margin:0; max-width:660px}
+
+.provenance{
+  display:grid; grid-template-columns:repeat(auto-fit,minmax(158px,1fr)); gap:1px;
+  background:var(--rule-soft); border:1px solid var(--rule-soft);
+  margin:34px 0 0;
+}
+.provenance div{background:var(--ground); padding:12px 14px}
+.provenance dt{
+  font-family:Archivo,sans-serif; font-size:10.5px; font-weight:600; letter-spacing:.13em;
+  text-transform:uppercase; color:var(--ink-3); margin:0 0 5px;
+}
+.provenance dd{margin:0; font-family:"JetBrains Mono",monospace; font-size:13px; color:var(--ink)}
+
+/* ---------- sections ---------- */
+section{padding:52px 0 0}
+h2{
+  font-size:13px; font-weight:600; letter-spacing:.15em; text-transform:uppercase;
+  color:var(--ink-3); margin:0 0 8px; padding-bottom:10px; border-bottom:1px solid var(--rule);
+}
+h3{font-size:25px; font-weight:600; letter-spacing:-.015em; line-height:1.22; margin:26px 0 12px; text-wrap:balance}
+h4{font-family:Archivo,sans-serif; font-size:16px; font-weight:600; margin:22px 0 8px; letter-spacing:-.005em}
+p{margin:0 0 16px}
+.lede{font-size:19px; line-height:1.55}
+a{color:var(--accent); text-decoration:underline; text-underline-offset:2px; text-decoration-thickness:1px}
+a:focus-visible,summary:focus-visible{outline:2px solid var(--accent); outline-offset:3px}
+
+/* ---------- verdict ---------- */
+.verdict{
+  background:var(--surface); border:1px solid var(--rule);
+  border-left:4px solid var(--critical); padding:26px 30px; margin:26px 0 8px;
+}
+.verdict p:last-child{margin-bottom:0}
+.verdict .kicker{
+  font-family:Archivo,sans-serif; font-size:11.5px; font-weight:700; letter-spacing:.14em;
+  text-transform:uppercase; color:var(--critical); margin:0 0 10px;
+}
+.verdict .claim{font-size:22px; line-height:1.4; font-weight:600; letter-spacing:-.01em; margin:0 0 14px}
+
+/* ---------- code ---------- */
+pre{
+  background:var(--surface); border:1px solid var(--rule);
+  padding:16px 18px; margin:16px 0; overflow-x:auto;
+  font-size:13px; line-height:1.62; color:var(--ink);
+}
+pre b{font-weight:700; color:var(--critical)}
+pre i{font-style:normal; color:var(--ink-3)}
+code{
+  background:var(--surface-2); border:1px solid var(--rule-soft);
+  padding:1px 5px; font-size:.86em;
+}
+.codelabel{
+  font-family:Archivo,sans-serif; font-size:10.5px; font-weight:600; letter-spacing:.13em;
+  text-transform:uppercase; color:var(--ink-3); margin:22px 0 -6px;
+}
+.fix{border-left:3px solid var(--accent)}
+.broken{border-left:3px solid var(--critical)}
+
+/* ---------- tables ---------- */
+.tablewrap{overflow-x:auto; margin:20px 0; border:1px solid var(--rule); background:var(--surface)}
+table{border-collapse:collapse; width:100%; font-size:13.5px; min-width:560px}
+th{
+  font-size:10.5px; font-weight:600; letter-spacing:.12em; text-transform:uppercase;
+  color:var(--ink-3); text-align:left; padding:11px 14px;
+  border-bottom:1px solid var(--rule); white-space:nowrap;
+}
+td{padding:10px 14px; border-bottom:1px solid var(--rule-soft); vertical-align:top; color:var(--ink-2)}
+td:first-child{color:var(--ink); font-family:"JetBrains Mono",monospace; font-size:12.5px; white-space:nowrap}
+td.n{text-align:right; white-space:nowrap; color:var(--ink)}
+tr:last-child td{border-bottom:none}
+tbody tr:hover td{background:var(--surface-2)}
+.stage-hi td{background:var(--critical-bg)}
+.stage-hi:hover td{background:var(--critical-bg)}
+
+/* ---------- compute chart ---------- */
+figure{margin:24px 0 8px; background:var(--surface); border:1px solid var(--rule); padding:24px 26px}
+figcaption{font-size:13.5px; color:var(--ink-3); margin-top:18px; line-height:1.5}
+.figtitle{font-family:Archivo,sans-serif; font-size:15px; font-weight:600; margin:0 0 4px; color:var(--ink)}
+.figsub{font-size:13px; color:var(--ink-3); margin:0 0 22px; font-family:"JetBrains Mono",monospace}
+.bars{display:flex; flex-direction:column; gap:16px}
+.barrow{display:grid; grid-template-columns:minmax(120px,168px) 1fr; gap:16px; align-items:center}
+.barlab{font-family:"JetBrains Mono",monospace; font-size:12.5px; color:var(--ink); line-height:1.35}
+.barlab small{display:block; color:var(--ink-3); font-size:11px; margin-top:2px}
+.bartrack{display:flex; align-items:center; gap:10px; min-width:0}
+.barfill{
+  height:16px; background:var(--bar); border-radius:0 3px 3px 0; flex:0 0 auto;
+  transition:opacity .15s ease;
+}
+.barrow:hover .barfill{opacity:.82}
+.barfill.q{background:var(--bar-soft)}
+.barval{font-family:"JetBrains Mono",monospace; font-size:12.5px; color:var(--ink); white-space:nowrap}
+.barval span{color:var(--ink-3)}
+.axis{
+  display:flex; justify-content:space-between; margin-top:14px; padding-top:8px;
+  border-top:1px solid var(--rule-soft);
+  font-family:"JetBrains Mono",monospace; font-size:11px; color:var(--ink-3);
+}
+.axis div:first-child{margin-left:184px}
+
+/* ---------- defect register ---------- */
+.defects{display:flex; flex-direction:column; gap:0; margin:24px 0 0; border:1px solid var(--rule); background:var(--surface)}
+.defect{display:grid; grid-template-columns:6px 1fr; border-bottom:1px solid var(--rule-soft)}
+.defect:last-child{border-bottom:none}
+.stripe{background:var(--minor)}
+.defect[data-sev="critical"] .stripe{background:var(--critical)}
+.defect[data-sev="major"] .stripe{background:var(--major)}
+.defect[data-sev="doc"] .stripe{background:var(--doc)}
+.dbody{padding:20px 24px}
+.dhead{display:flex; flex-wrap:wrap; align-items:baseline; gap:10px; margin-bottom:8px}
+.did{font-family:"JetBrains Mono",monospace; font-size:12px; color:var(--ink-3); letter-spacing:.02em}
+.dtitle{font-family:Archivo,sans-serif; font-size:17px; font-weight:600; letter-spacing:-.008em; margin:0; flex:1 1 260px; color:var(--ink)}
+.chip{
+  font-size:10px; font-weight:700; letter-spacing:.1em; text-transform:uppercase;
+  padding:3px 8px; white-space:nowrap; border:1px solid transparent;
+}
+.chip[data-sev="critical"]{color:var(--critical); background:var(--critical-bg); border-color:var(--critical)}
+.chip[data-sev="major"]{color:var(--major); background:var(--major-bg); border-color:var(--major)}
+.chip[data-sev="minor"]{color:var(--minor); background:var(--minor-bg); border-color:var(--minor)}
+.chip[data-sev="doc"]{color:var(--doc); background:var(--doc-bg); border-color:var(--doc)}
+.dbody p{font-size:15.5px; margin:0 0 10px; color:var(--ink-2); max-width:62ch}
+.dbody p:last-child{margin-bottom:0}
+.dbody p strong{color:var(--ink); font-weight:600}
+.evidence{
+  font-family:"JetBrains Mono",monospace; font-size:12px; color:var(--ink-3);
+  border-top:1px dashed var(--rule); padding-top:9px; margin-top:12px;
+}
+.evidence b{color:var(--ink-2); font-weight:500}
+
+/* ---------- proof cards ---------- */
+.proofs{display:grid; grid-template-columns:repeat(auto-fit,minmax(268px,1fr)); gap:1px; background:var(--rule); border:1px solid var(--rule); margin:24px 0}
+.proof{background:var(--surface); padding:22px 24px}
+.proof .pn{
+  font-family:"JetBrains Mono",monospace; font-size:11px; letter-spacing:.12em;
+  text-transform:uppercase; color:var(--accent); margin:0 0 10px; font-weight:700;
+}
+.proof h4{margin:0 0 8px; font-size:15.5px}
+.proof p{font-size:14.5px; margin:0; color:var(--ink-2)}
+.proof pre{margin:12px 0 0; font-size:11.5px; padding:12px 13px; background:var(--surface-2)}
+
+/* ---------- rebuild list ---------- */
+.rebuild{list-style:none; padding:0; margin:22px 0 0; counter-reset:rb}
+.rebuild li{
+  counter-increment:rb; display:grid; grid-template-columns:38px 1fr; gap:16px;
+  padding:18px 0; border-top:1px solid var(--rule-soft);
+}
+.rebuild li:first-child{border-top:1px solid var(--rule)}
+.rebuild li::before{
+  content:"R" counter(rb); font-family:"JetBrains Mono",monospace; font-size:12px;
+  font-weight:700; color:var(--accent); padding-top:3px;
+}
+.rebuild h4{margin:0 0 5px}
+.rebuild p{margin:0; font-size:15.5px; color:var(--ink-2); max-width:62ch}
+
+footer{margin-top:64px; padding-top:22px; border-top:1px solid var(--rule); font-size:13px; color:var(--ink-3); max-width:680px}
+footer p{margin:0 0 8px}
+
+@media (max-width:640px){
+  .barrow{grid-template-columns:1fr}
+  .axis div:first-child{margin-left:0}
+  .wrap{padding:0 18px 64px}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+
+<div class="wrap">
+
+<header>
+  <p class="eyebrow">Model teardown &middot; Hailo Model Zoo</p>
+  <h1>Hailo StereoNet Teardown</h1>
+  <p class="standfirst">A full reverse-engineering of <code>stereonet</code>, the only stereo depth model in the Hailo Model Zoo. The matching stage does not match. Everything downstream is compensating for it.</p>
+
+  <dl class="provenance">
+    <div><dt>ONNX</dt><dd>23.69 MB</dd></div>
+    <div><dt>HEF (hailo8)</dt><dd>24.06 MB</dd></div>
+    <div><dt>Graph</dt><dd>168 nodes</dd></div>
+    <div><dt>Opset</dt><dd>14 &middot; ir 7</dd></div>
+    <div><dt>Exporter</dt><dd>pytorch 2.0.0</dd></div>
+    <div><dt>Zoo version</dt><dd>v2.19.0</dd></div>
+  </dl>
+</header>
+
+<section>
+  <h2>The verdict</h2>
+  <div class="verdict">
+    <p class="kicker">Critical &mdash; confirmed three independent ways</p>
+    <p class="claim">All twelve disparity levels of the cost volume are bit-identical. The network performs no disparity search whatsoever.</p>
+    <p>The cost volume is built by shifting the left feature map by <span class="mono">d</span> columns and subtracting the right feature map, for <span class="mono">d = 0&hellip;11</span>. The shift is written as a zero-pad followed by a slice &mdash; but the slice takes columns <span class="mono">[0:W]</span> instead of <span class="mono">[d:d+W]</span>, which returns the unpadded tensor unchanged. Every level therefore computes the same <span class="mono">left &minus; right</span> at zero disparity.</p>
+    <p>What survives into the disparity axis is not matching cost. It is the zero-padding boundary of the 3D convolutions that filter the volume &mdash; a fixed, image-independent profile. The soft-argmin decodes that profile into a near-constant disparity prior, and the refinement head, which carries <strong>90.6% of the model's compute</strong>, is left to recover depth from the left image alone.</p>
+  </div>
+  <div class="col">
+    <p style="margin-top:22px">This is not a quantization artifact and not a Hailo compilation defect. It is present in the float ONNX, it traces to a single line in the upstream reference implementation, and it is faithfully compiled into the shipped HEF.</p>
+  </div>
+</section>
+
+<section>
+  <h2>Evidence</h2>
+  <div class="proofs">
+    <div class="proof">
+      <p class="pn">Source</p>
+      <h4>The off-by-<span class="mono">d</span> slice</h4>
+      <p>In <span class="mono">utils/cost_volume.py</span> upstream, the pad is correct and the slice undoes it.</p>
+      <pre class="broken">left_move = torch.cat(
+    (origin, zero_padding), 3)
+lmr = left_move[:, :, :,
+    <b>:origin.shape[3]</b>] - candidate</pre>
+    </div>
+    <div class="proof">
+      <p class="pn">Graph</p>
+      <h4>Eleven identical slices</h4>
+      <p>All 11 <span class="mono">Slice</span> nodes share one starts/ends pair, while the pad widths grow 1&hellip;11.</p>
+      <pre>starts = [0]   ends = [77]
+axes   = [3]   steps = [1]
+<i>&rarr; every Slice returns cols 0..76
+  = the unshifted left features</i></pre>
+    </div>
+    <div class="proof">
+      <p class="pn">Runtime</p>
+      <h4>Zero difference measured</h4>
+      <p>Probing the 12 <span class="mono">Sub</span> outputs under onnxruntime on a random stereo pair.</p>
+      <pre>Sub_1 .. Sub_11 vs Sub_0
+max|diff| = 0.000000e+00
+identical = True  (all 11)</pre>
+    </div>
+  </div>
+  <div class="col">
+    <p>The three lines of evidence are independent: one reads the upstream Python, one reads the exported protobuf, one executes the shipped weights. They agree exactly, which also rules out an export-time transformation as the cause.</p>
+  </div>
+</section>
+
+<section>
+  <h2>Recovered architecture</h2>
+  <div class="col">
+    <p>Two <span class="mono">368&times;1232&times;3</span> inputs, one <span class="mono">368&times;1232&times;1</span> disparity output. The feature extractor is Siamese by weight but unrolled twice in the graph. Downsampling is four stride-2 5&times;5 convolutions, so matching happens at 1/16 resolution, and <span class="mono">D = 192/16 = 12</span> gives the intended 192-pixel maximum disparity.</p>
+  </div>
+  <div class="tablewrap">
+    <table>
+      <thead>
+        <tr><th>Stage</th><th>Nodes</th><th>Output shape</th><th class="n">GOPS</th><th class="n">Share</th><th>Notes</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>downsampling &times;4</td><td>0&ndash;3, 35&ndash;38</td><td>1&times;32&times;23&times;77</td><td class="n">&mdash;</td><td class="n">&mdash;</td><td>5&times;5 s2, shared weights, run twice</td></tr>
+        <tr><td>res &times;6 + conv</td><td>4&ndash;34, 39&ndash;69</td><td>1&times;32&times;23&times;77</td><td class="n">5.75</td><td class="n">5.1%</td><td>LeakyReLU &alpha;=0.2</td></tr>
+        <tr class="stage-hi"><td>cost volume</td><td>70&ndash;117</td><td>1&times;32&times;12&times;23&times;77</td><td class="n">&mdash;</td><td class="n">&mdash;</td><td>12 identical slices &mdash; defect CV-1</td></tr>
+        <tr><td>3D filter &times;5</td><td>118&ndash;126</td><td>1&times;1&times;12&times;23&times;77</td><td class="n">4.74</td><td class="n">4.2%</td><td>Conv3d 3&times;3&times;3, LeakyReLU &alpha;=0.01</td></tr>
+        <tr><td>upsample</td><td>128</td><td>1&times;12&times;368&times;1232</td><td class="n">&mdash;</td><td class="n">&mdash;</td><td>bilinear 16&times; on all 12 channels</td></tr>
+        <tr><td>soft-argmin</td><td>129&ndash;132</td><td>1&times;1&times;368&times;1232</td><td class="n">&mdash;</td><td class="n">&mdash;</td><td>Neg &rarr; Softmax &rarr; Mul ramp &rarr; ReduceSum</td></tr>
+        <tr class="stage-hi"><td>refine &times;6 + conv</td><td>133&ndash;167</td><td>1&times;1&times;368&times;1232</td><td class="n">101.59</td><td class="n">90.6%</td><td>full-res, dilations 1,2,4,8,1,1</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section>
+  <h2>Where the compute goes</h2>
+  <figure>
+    <p class="figtitle">Operations by stage</p>
+    <p class="figsub">GOPS at 368&times;1232, batch 1 &middot; total 112.07 G</p>
+    <div class="bars">
+      <div class="barrow">
+        <div class="barlab">refine<small>14 conv, full res</small></div>
+        <div class="bartrack"><div class="barfill" style="width:90.6%"></div><div class="barval">101.59 <span>&middot; 90.6%</span></div></div>
+      </div>
+      <div class="barrow">
+        <div class="barlab">feature<small>34 conv, 1/16 res</small></div>
+        <div class="bartrack"><div class="barfill" style="width:5.1%"></div><div class="barval">5.75 <span>&middot; 5.1%</span></div></div>
+      </div>
+      <div class="barrow">
+        <div class="barlab">cost filter 3D<small>5 conv3d, 1/16 res</small></div>
+        <div class="bartrack"><div class="barfill q" style="width:4.2%"></div><div class="barval">4.74 <span>&middot; 4.2%</span></div></div>
+      </div>
+    </div>
+    <div class="axis"><div>0</div><div>112.07 GOPS</div></div>
+    <figcaption>Nine of every ten operations run in the refinement head, at full resolution, on 32 channels. The stereo matching that justifies a two-camera model costs 4.2% &mdash; and, per CV-1, computes nothing. The lighter bar marks the stage whose output carries no disparity information.</figcaption>
+  </figure>
+  <div class="col">
+    <p>The independently computed total, 112.07 GOPS, matches the published 112.2 G to within rounding &mdash; which confirms the measurement method and, by the same token, confirms that the parameter figure published beside it is wrong.</p>
+  </div>
+</section>
+
+<section>
+  <h2>Defect register</h2>
+  <div class="defects">
+
+    <div class="defect" data-sev="critical">
+      <div class="stripe"></div>
+      <div class="dbody">
+        <div class="dhead">
+          <span class="did">CV-1</span>
+          <h3 class="dtitle">Cost volume carries no disparity information</h3>
+          <span class="chip" data-sev="critical">Critical</span>
+        </div>
+        <p>The shift-by-<span class="mono">d</span> is a no-op: <span class="mono">cat(origin, zeros_d)[:, :, :, :W]</span> returns <span class="mono">origin</span>. All 12 levels reduce to <span class="mono">left &minus; right</span> at zero disparity. <strong>The model cannot perform stereo matching at any disparity.</strong> Correct form is <span class="mono">[:, :, :, d:d+W]</span>, or pad on the left of the right-image features instead.</p>
+        <p>This propagates into everything downstream: the filtered volume varies along <span class="mono">D</span> only through the 3D convolutions' zero-padding at the disparity boundary, giving an image-independent cost profile that the soft-argmin decodes to a roughly constant prior.</p>
+        <p class="evidence"><b>Evidence</b> &nbsp;upstream <span class="mono">utils/cost_volume.py</span> &middot; ONNX nodes 71&ndash;103 &middot; onnxruntime probe: max|diff| = 0.0 across all 11 levels &middot; filtered-volume channel means form a fixed padding bowl, <span class="mono">&minus;0.78 &hellip; &minus;5.56 &hellip; &minus;0.48</span></p>
+      </div>
+    </div>
+
+    <div class="defect" data-sev="critical">
+      <div class="stripe"></div>
+      <div class="dbody">
+        <div class="dhead">
+          <span class="did">DOC-1</span>
+          <h3 class="dtitle">Published parameter count overstated 1000&times;</h3>
+          <span class="chip" data-sev="doc">Documentation</span>
+        </div>
+        <p>The public table lists <strong>623.1</strong> under a column headed <span class="mono">Params (M)</span>. Hailo's own <span class="mono">stereonet.yaml</span> records <span class="mono">parameters: 623.1K</span>. The units were dropped in the doc generator: 623.1&nbsp;thousand became 623.1&nbsp;million.</p>
+        <p>Summing every convolution weight and bias over the unrolled graph reproduces <strong>623,138</strong> exactly, which pins the provenance of the number. The count of genuinely distinct learned parameters is lower still, at <strong>423,586</strong>, because the Siamese tower is counted twice.</p>
+        <p class="evidence"><b>Evidence</b> &nbsp;<span class="mono">HAILO8_stereo_depth_estimation.rst</span> vs <span class="mono">cfg/networks/stereonet.yaml</span> &middot; measured 623,138 unrolled / 423,586 unique</p>
+      </div>
+    </div>
+
+    <div class="defect" data-sev="major">
+      <div class="stripe"></div>
+      <div class="dbody">
+        <div class="dhead">
+          <span class="did">MEM-1</span>
+          <h3 class="dtitle">21.8 MB constant is a disparity index ramp</h3>
+          <span class="chip" data-sev="major">Major</span>
+        </div>
+        <p>A single initializer, <span class="mono">/Tile_output_0</span>, is a <span class="mono">1&times;12&times;368&times;1232</span> float32 tensor holding the value <span class="mono">c</span> in every element of channel <span class="mono">c</span>. It is <strong>91.9% of the ONNX file</strong> and 5.44 M of the 5.91 M shipped initializer values &mdash; the materialised <span class="mono">torch.arange(D).repeat(...)</span> grid from the upstream soft-argmin.</p>
+        <p>Multiplying by this ramp and summing over channels is exactly a 1&times;1 convolution from 12 channels to 1 with fixed weights <span class="mono">[0,1,&hellip;,11]</span> and zero bias. Folding it costs nothing in accuracy and removes the constant entirely.</p>
+        <p class="evidence"><b>Evidence</b> &nbsp;initializer dump: 21.76 MB, 12 unique values, one constant per channel &middot; ONNX nodes 131&ndash;132</p>
+      </div>
+    </div>
+
+    <div class="defect" data-sev="major">
+      <div class="stripe"></div>
+      <div class="dbody">
+        <div class="dhead">
+          <span class="did">HW-1</span>
+          <h3 class="dtitle">Refinement head does not fit the accelerator</h3>
+          <span class="chip" data-sev="major">Major</span>
+        </div>
+        <p>Six residual blocks at <span class="mono">368&times;1232&times;32</span> exceed what a Hailo context holds, so the compile script spatially defuses them. <span class="mono">conv47</span> and <span class="mono">conv48</span> are each split into <strong>22 sub-convolutions</strong>, then rejoined through nested <span class="mono">shape_splitter</span> and <span class="mono">concat</span> chains.</p>
+        <p>The shipped HEF contains <strong>460 distinct convolution layers</strong> generated from 53 in the ONNX &mdash; an 8.7&times; expansion, with 338 defuse fragments. This is the direct cause of the 10.7 FPS figure, and it is spent on the stage that is compensating for CV-1.</p>
+        <p class="evidence"><b>Evidence</b> &nbsp;<span class="mono">alls/generic/stereonet.alls</span>: <span class="mono">defuse(conv47, 22, SPATIAL)</span> &middot; HEF string table: 460 conv names, 338 <span class="mono">_sd*</span>/<span class="mono">_ws</span> fragments</p>
+      </div>
+    </div>
+
+    <div class="defect" data-sev="major">
+      <div class="stripe"></div>
+      <div class="dbody">
+        <div class="dhead">
+          <span class="did">NUM-1</span>
+          <h3 class="dtitle">Softmax runs at full resolution, unscaled</h3>
+          <span class="chip" data-sev="major">Major</span>
+        </div>
+        <p>The 12-channel cost volume is bilinearly upsampled 16&times; <em>before</em> the softmax, so the softmax and the argmin run over <strong>5,441,536</strong> elements instead of 21,252 &mdash; a 256&times; increase, with no temperature or scaling term on the logits.</p>
+        <p>An unscaled softmax over int8 logits with a narrow calibrated range flattens toward uniform, which biases the decoded disparity toward the mean of the ramp. This is the most likely single contributor to the <strong>8.22 &rarr; 10.3 EPE</strong> degradation on hardware, and the compile script applies no mixed-precision or per-layer quantization tuning anywhere to mitigate it.</p>
+        <p class="evidence"><b>Evidence</b> &nbsp;ONNX nodes 128&ndash;132 &middot; <span class="mono">stereonet.alls</span> contains only defuse and normalization commands, no quantization directives</p>
+      </div>
+    </div>
+
+    <div class="defect" data-sev="minor">
+      <div class="stripe"></div>
+      <div class="dbody">
+        <div class="dhead">
+          <span class="did">CV-2</span>
+          <h3 class="dtitle">Zero padding contaminates the disparity axis</h3>
+          <span class="chip" data-sev="minor">Minor</span>
+        </div>
+        <p>Even with CV-1 fixed, padding the shifted features with zeros makes the cost at the image border <span class="mono">0 &minus; right</span>, a magnitude term rather than a matching term. On a 1232-pixel-wide image the first 11 cells at 1/16 resolution &mdash; <strong>176 pixels, 14% of image width</strong> &mdash; would carry a systematic left-edge bias. Standard practice is to mask those columns out of the loss and out of the argmin.</p>
+        <p class="evidence"><b>Evidence</b> &nbsp;all 11 pad initializers verified all-zero &middot; <span class="mono">/Constant_output_0</span> &hellip; <span class="mono">/Constant_50_output_0</span></p>
+      </div>
+    </div>
+
+    <div class="defect" data-sev="minor">
+      <div class="stripe"></div>
+      <div class="dbody">
+        <div class="dhead">
+          <span class="did">EXP-1</span>
+          <h3 class="dtitle">Export loads weights non-strictly</h3>
+          <span class="chip" data-sev="minor">Minor</span>
+        </div>
+        <p>Upstream <span class="mono">export.py</span> calls <span class="mono">load_state_dict(&hellip;, strict=False)</span>, which silently accepts a checkpoint with missing or renamed keys and leaves those tensors at their random initialisation. Combined with CV-1 there is no assertion anywhere that the exported graph is the trained graph. Any rebuild should load strictly and assert a float parity check against the training model before export.</p>
+        <p class="evidence"><b>Evidence</b> &nbsp;upstream <span class="mono">export.py</span> &middot; also exports at 224&times;224, not the 368&times;1232 the zoo publishes</p>
+      </div>
+    </div>
+
+    <div class="defect" data-sev="minor">
+      <div class="stripe"></div>
+      <div class="dbody">
+        <div class="dhead">
+          <span class="did">DOC-2</span>
+          <h3 class="dtitle">Published hardware support contradicts the config</h3>
+          <span class="chip" data-sev="doc">Documentation</span>
+        </div>
+        <p>The model's YAML declares <span class="mono">supported_hw_arch: [hailo15h, hailo10h]</span>. The Model Zoo nonetheless publishes a Hailo-8 page for it, with Hailo-8 FPS measurements and a compiled Hailo-8 HEF. One of the two is stale; plan the rebuild against a target you have confirmed rather than against this table.</p>
+        <p class="evidence"><b>Evidence</b> &nbsp;<span class="mono">cfg/networks/stereonet.yaml</span> vs <span class="mono">docs/public_models/HAILO8/</span></p>
+      </div>
+    </div>
+
+    <div class="defect" data-sev="minor">
+      <div class="stripe"></div>
+      <div class="dbody">
+        <div class="dhead">
+          <span class="did">ARCH-1</span>
+          <h3 class="dtitle">Single-stage refinement at 1/16 matching resolution</h3>
+          <span class="chip" data-sev="minor">Minor</span>
+        </div>
+        <p>StereoNet's design intent is hierarchical: refine at 1/8, 1/4, 1/2 and 1/1, each stage correcting the one below. This implementation refines once, at full resolution, from a 1/16 disparity map. Each matching bin is worth 16 pixels of disparity, and the dilation ladder 1-2-4-8 gives roughly 31 pixels of receptive field to correct it. Even with matching repaired, the quantisation of the disparity axis will dominate the error.</p>
+        <p class="evidence"><b>Evidence</b> &nbsp;single <span class="mono">Resize</span> node (128) &middot; upstream <span class="mono">forward_stage3</span></p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<section>
+  <h2>What the rebuild has to change</h2>
+  <div class="col">
+    <p class="lede">Ordered by how much each one buys. The first is not optional &mdash; without it, nothing else in the model is doing stereo.</p>
+  </div>
+  <ol class="rebuild">
+    <li>
+      <h4>Fix the shift, then assert it</h4>
+      <p>Slice <span class="mono">[d:d+W]</span>, and add a unit test that feeds a synthetic pair at known disparity and checks the argmin lands in the right bin. A test that only checks output shape would have passed on the broken model for three years.</p>
+    </li>
+    <li>
+      <h4>Move soft-argmin below the upsample</h4>
+      <p>Decode disparity at 1/16, then upsample one channel instead of twelve. 256&times; less softmax, and it removes the full-resolution 12-channel tensor from the dataflow entirely. Add a learned temperature on the logits so int8 calibration has a range to work with.</p>
+    </li>
+    <li>
+      <h4>Fold the ramp into a 1&times;1 convolution</h4>
+      <p>Weights <span class="mono">[0&hellip;11]</span>, no bias, exactly equivalent. Deletes 91.9% of the model file and one DDR-resident constant.</p>
+    </li>
+    <li>
+      <h4>Rebalance the budget away from full-resolution refinement</h4>
+      <p>90.6% of operations in a head that exists to compensate for a broken front end is the wrong shape. Refine hierarchically at 1/8 and 1/4 with a thin full-resolution stage, sized so no layer needs spatial defusing on the target device.</p>
+    </li>
+    <li>
+      <h4>Raise matching resolution, or interpolate the disparity axis</h4>
+      <p>Match at 1/8 with <span class="mono">D=24</span>, or keep 1/16 and add sub-bin interpolation around the argmin. Either recovers most of the 16-pixel quantisation ARCH-1 leaves on the table.</p>
+    </li>
+    <li>
+      <h4>Mask the invalid left border</h4>
+      <p>Exclude the first <span class="mono">D</span> columns from the loss and from evaluation, so the model is not trained to fit padding artifacts.</p>
+    </li>
+  </ol>
+</section>
+
+<footer>
+  <p>Reverse-engineered from <span class="mono">stereonet.onnx</span> (Model Zoo pretrained, 2023-05-31), <span class="mono">stereonet.hef</span> (v2.19.0, hailo8), <span class="mono">cfg/networks/stereonet.yaml</span>, <span class="mono">alls/generic/stereonet.alls</span>, and the upstream reference implementation at <a href="https://github.com/nivosco/StereoNet">nivosco/StereoNet</a>.</p>
+  <p>Graph analysis with onnx 1.16.2; runtime probes with onnxruntime 1.29 on CPU. Published accuracy figures &mdash; float EPE 8.223, hardware EPE 10.3 &mdash; are Hailo's own, quoted unmodified.</p>
+</footer>
+
+</div>

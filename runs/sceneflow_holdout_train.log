@@ -1,0 +1,222 @@
+C:\Microchip\hailo-stereo\src\train.py:252: UserWarning: Detected call of `lr_scheduler.step()` before `optimizer.step()`. In PyTorch 1.1.0 and later, you should call them in the opposite order: `optimizer.step()` before `lr_scheduler.step()`.  Failure to do this will result in PyTorch skipping the first value of the learning rate schedule. See more details at https://pytorch.org/docs/stable/optim.html#how-to-adjust-learning-rate
+  sched.step()
+held out ['35mm_focallength/scene_forwards/slow']: 800 frames (200 sampled for validation), 3600 left to train on
+device cuda | train 3600 | val 200 | crop 256x512 | batch 16
+  epoch   0 step     0/225 loss 154.6742 lr 4.00e-05
+  epoch   0 step    50/225 loss 132.1471 lr 5.35e-05
+  epoch   0 step   100/225 loss 107.5664 lr 9.22e-05
+  epoch   0 step   150/225 loss 95.5966 lr 1.54e-04
+  epoch   0 step   200/225 loss 85.8992 lr 2.36e-04
+epoch   0 | loss 82.0408 | val EPE 26.345 px | D1 86.75% | 93s
+  new best EPE 26.345 px -> runs\sceneflow_holdout\best.pt
+  epoch   1 step     0/225 loss 59.3653 lr 2.83e-04
+  epoch   1 step    50/225 loss 49.2547 lr 3.85e-04
+  epoch   1 step   100/225 loss 43.7727 lr 4.95e-04
+  epoch   1 step   150/225 loss 41.4061 lr 6.07e-04
+  epoch   1 step   200/225 loss 39.0099 lr 7.13e-04
+epoch   1 | loss 38.2418 | val EPE 12.322 px | D1 71.66% | 80s
+  new best EPE 12.322 px -> runs\sceneflow_holdout\best.pt
+  epoch   2 step     0/225 loss 27.2229 lr 7.63e-04
+  epoch   2 step    50/225 loss 26.0425 lr 8.52e-04
+  epoch   2 step   100/225 loss 26.7136 lr 9.23e-04
+  epoch   2 step   150/225 loss 26.2944 lr 9.72e-04
+  epoch   2 step   200/225 loss 26.5349 lr 9.97e-04
+epoch   2 | loss 26.1013 | val EPE 10.699 px | D1 64.35% | 74s
+  new best EPE 10.699 px -> runs\sceneflow_holdout\best.pt
+  epoch   3 step     0/225 loss 25.3513 lr 1.00e-03
+  epoch   3 step    50/225 loss 23.0639 lr 1.00e-03
+  epoch   3 step   100/225 loss 21.7731 lr 9.99e-04
+  epoch   3 step   150/225 loss 21.1706 lr 9.98e-04
+  epoch   3 step   200/225 loss 20.5185 lr 9.97e-04
+epoch   3 | loss 20.2753 | val EPE 8.959 px | D1 57.54% | 71s
+  new best EPE 8.959 px -> runs\sceneflow_holdout\best.pt
+  epoch   4 step     0/225 loss 14.5608 lr 9.97e-04
+  epoch   4 step    50/225 loss 17.7005 lr 9.95e-04
+  epoch   4 step   100/225 loss 17.4252 lr 9.93e-04
+  epoch   4 step   150/225 loss 17.6618 lr 9.91e-04
+  epoch   4 step   200/225 loss 17.6678 lr 9.88e-04
+epoch   4 | loss 17.6332 | val EPE 7.534 px | D1 45.70% | 69s
+  new best EPE 7.534 px -> runs\sceneflow_holdout\best.pt
+  epoch   5 step     0/225 loss 18.6274 lr 9.86e-04
+  epoch   5 step    50/225 loss 16.4852 lr 9.83e-04
+  epoch   5 step   100/225 loss 16.2901 lr 9.80e-04
+  epoch   5 step   150/225 loss 16.0683 lr 9.76e-04
+  epoch   5 step   200/225 loss 15.5700 lr 9.72e-04
+epoch   5 | loss 15.5404 | val EPE 7.454 px | D1 47.42% | 69s
+  new best EPE 7.454 px -> runs\sceneflow_holdout\best.pt
+  epoch   6 step     0/225 loss 15.1249 lr 9.70e-04
+  epoch   6 step    50/225 loss 14.5818 lr 9.65e-04
+  epoch   6 step   100/225 loss 14.3068 lr 9.60e-04
+  epoch   6 step   150/225 loss 14.0824 lr 9.55e-04
+  epoch   6 step   200/225 loss 14.0963 lr 9.49e-04
+epoch   6 | loss 14.0863 | val EPE 6.649 px | D1 39.46% | 75s
+  new best EPE 6.649 px -> runs\sceneflow_holdout\best.pt
+  epoch   7 step     0/225 loss 9.5988 lr 9.47e-04
+  epoch   7 step    50/225 loss 13.9023 lr 9.41e-04
+  epoch   7 step   100/225 loss 13.5978 lr 9.34e-04
+  epoch   7 step   150/225 loss 13.1150 lr 9.28e-04
+  epoch   7 step   200/225 loss 12.7344 lr 9.21e-04
+epoch   7 | loss 12.7218 | val EPE 5.798 px | D1 35.08% | 79s
+  new best EPE 5.798 px -> runs\sceneflow_holdout\best.pt
+  epoch   8 step     0/225 loss 10.5018 lr 9.17e-04
+  epoch   8 step    50/225 loss 11.9930 lr 9.10e-04
+  epoch   8 step   100/225 loss 11.6243 lr 9.03e-04
+  epoch   8 step   150/225 loss 11.6532 lr 8.95e-04
+  epoch   8 step   200/225 loss 11.8647 lr 8.87e-04
+epoch   8 | loss 11.8346 | val EPE 5.884 px | D1 34.77% | 81s
+  epoch   9 step     0/225 loss 9.0630 lr 8.83e-04
+  epoch   9 step    50/225 loss 11.3759 lr 8.74e-04
+  epoch   9 step   100/225 loss 11.0520 lr 8.66e-04
+  epoch   9 step   150/225 loss 10.9905 lr 8.57e-04
+  epoch   9 step   200/225 loss 10.8652 lr 8.47e-04
+epoch   9 | loss 10.9639 | val EPE 5.368 px | D1 33.48% | 76s
+  new best EPE 5.368 px -> runs\sceneflow_holdout\best.pt
+  epoch  10 step     0/225 loss 9.3071 lr 8.43e-04
+  epoch  10 step    50/225 loss 11.5555 lr 8.33e-04
+  epoch  10 step   100/225 loss 11.4633 lr 8.23e-04
+  epoch  10 step   150/225 loss 11.0667 lr 8.14e-04
+  epoch  10 step   200/225 loss 11.0091 lr 8.03e-04
+epoch  10 | loss 11.0640 | val EPE 5.165 px | D1 31.65% | 97s
+  new best EPE 5.165 px -> runs\sceneflow_holdout\best.pt
+  epoch  11 step     0/225 loss 11.1205 lr 7.98e-04
+  epoch  11 step    50/225 loss 10.2626 lr 7.88e-04
+  epoch  11 step   100/225 loss 10.1501 lr 7.77e-04
+  epoch  11 step   150/225 loss 10.3743 lr 7.66e-04
+  epoch  11 step   200/225 loss 10.3567 lr 7.55e-04
+epoch  11 | loss 10.3664 | val EPE 5.072 px | D1 31.18% | 91s
+  new best EPE 5.072 px -> runs\sceneflow_holdout\best.pt
+  epoch  12 step     0/225 loss 15.1581 lr 7.50e-04
+  epoch  12 step    50/225 loss 10.1102 lr 7.38e-04
+held out ['35mm_focallength/scene_forwards/slow']: 800 frames (200 sampled for validation), 3600 left to train on
+resumed from runs/sceneflow_holdout/last.pt at epoch 12 (best EPE 5.072 px)
+device cuda | train 3600 | val 200 | crop 256x512 | batch 16
+  epoch  12 step     0/225 loss 7.4291 lr 7.50e-04
+  epoch  12 step    50/225 loss 10.9310 lr 7.38e-04
+  epoch  12 step   100/225 loss 10.3075 lr 7.27e-04
+  epoch  12 step   150/225 loss 10.3268 lr 7.15e-04
+  epoch  12 step   200/225 loss 10.3523 lr 7.03e-04
+epoch  12 | loss 10.1688 | val EPE 4.727 px | D1 29.67% | 104s
+  new best EPE 4.727 px -> runs\sceneflow_holdout\best.pt
+  epoch  13 step     0/225 loss 8.6107 lr 6.98e-04
+  epoch  13 step    50/225 loss 8.7517 lr 6.86e-04
+  epoch  13 step   100/225 loss 9.2395 lr 6.74e-04
+  epoch  13 step   150/225 loss 9.4924 lr 6.61e-04
+  epoch  13 step   200/225 loss 9.3646 lr 6.49e-04
+epoch  13 | loss 9.3829 | val EPE 4.741 px | D1 29.60% | 91s
+  epoch  14 step     0/225 loss 6.4719 lr 6.43e-04
+  epoch  14 step    50/225 loss 8.9143 lr 6.30e-04
+  epoch  14 step   100/225 loss 8.7685 lr 6.18e-04
+  epoch  14 step   150/225 loss 8.7248 lr 6.05e-04
+  epoch  14 step   200/225 loss 9.1294 lr 5.93e-04
+epoch  14 | loss 9.1416 | val EPE 4.355 px | D1 26.16% | 95s
+  new best EPE 4.355 px -> runs\sceneflow_holdout\best.pt
+  epoch  15 step     0/225 loss 6.7304 lr 5.86e-04
+  epoch  15 step    50/225 loss 8.2556 lr 5.74e-04
+  epoch  15 step   100/225 loss 8.3335 lr 5.61e-04
+  epoch  15 step   150/225 loss 8.5902 lr 5.48e-04
+  epoch  15 step   200/225 loss 8.7306 lr 5.35e-04
+epoch  15 | loss 8.6357 | val EPE 4.371 px | D1 26.56% | 89s
+  epoch  16 step     0/225 loss 12.3812 lr 5.29e-04
+  epoch  16 step    50/225 loss 9.1737 lr 5.16e-04
+  epoch  16 step   100/225 loss 9.1664 lr 5.03e-04
+  epoch  16 step   150/225 loss 8.9600 lr 4.90e-04
+  epoch  16 step   200/225 loss 8.8278 lr 4.77e-04
+epoch  16 | loss 8.7825 | val EPE 4.343 px | D1 26.62% | 83s
+  new best EPE 4.343 px -> runs\sceneflow_holdout\best.pt
+  epoch  17 step     0/225 loss 10.1907 lr 4.70e-04
+  epoch  17 step    50/225 loss 9.0117 lr 4.58e-04
+  epoch  17 step   100/225 loss 9.1067 lr 4.45e-04
+  epoch  17 step   150/225 loss 8.5084 lr 4.32e-04
+  epoch  17 step   200/225 loss 8.4205 lr 4.19e-04
+epoch  17 | loss 8.4427 | val EPE 4.305 px | D1 25.31% | 85s
+  new best EPE 4.305 px -> runs\sceneflow_holdout\best.pt
+  epoch  18 step     0/225 loss 12.9208 lr 4.13e-04
+  epoch  18 step    50/225 loss 8.1206 lr 4.00e-04
+  epoch  18 step   100/225 loss 8.1864 lr 3.87e-04
+  epoch  18 step   150/225 loss 8.1502 lr 3.75e-04
+  epoch  18 step   200/225 loss 8.1742 lr 3.62e-04
+epoch  18 | loss 8.1394 | val EPE 4.108 px | D1 25.20% | 89s
+  new best EPE 4.108 px -> runs\sceneflow_holdout\best.pt
+  epoch  19 step     0/225 loss 9.7906 lr 3.56e-04
+  epoch  19 step    50/225 loss 7.8827 lr 3.44e-04
+  epoch  19 step   100/225 loss 8.2869 lr 3.32e-04
+  epoch  19 step   150/225 loss 8.1335 lr 3.19e-04
+  epoch  19 step   200/225 loss 7.9741 lr 3.07e-04
+epoch  19 | loss 7.9434 | val EPE 4.088 px | D1 24.38% | 91s
+  new best EPE 4.088 px -> runs\sceneflow_holdout\best.pt
+  epoch  20 step     0/225 loss 5.5901 lr 3.01e-04
+  epoch  20 step    50/225 loss 7.3429 lr 2.90e-04
+  epoch  20 step   100/225 loss 7.2608 lr 2.78e-04
+  epoch  20 step   150/225 loss 7.5495 lr 2.67e-04
+  epoch  20 step   200/225 loss 7.8093 lr 2.55e-04
+epoch  20 | loss 7.7674 | val EPE 3.967 px | D1 24.02% | 97s
+  new best EPE 3.967 px -> runs\sceneflow_holdout\best.pt
+  epoch  21 step     0/225 loss 6.2461 lr 2.50e-04
+  epoch  21 step    50/225 loss 7.7051 lr 2.38e-04
+held out ['35mm_focallength/scene_forwards/slow']: 800 frames (200 sampled for validation), 3600 left to train on
+resumed from runs/sceneflow_holdout/last.pt at epoch 21 (best EPE 3.967 px)
+device cuda | train 3600 | val 200 | crop 256x512 | batch 16
+  epoch  21 step     0/225 loss 5.8846 lr 2.50e-04
+  epoch  21 step    50/225 loss 7.5584 lr 2.38e-04
+  epoch  21 step   100/225 loss 7.5864 lr 2.28e-04
+  epoch  21 step   150/225 loss 7.6924 lr 2.17e-04
+  epoch  21 step   200/225 loss 7.7928 lr 2.06e-04
+epoch  21 | loss 7.7399 | val EPE 3.877 px | D1 23.70% | 95s
+  new best EPE 3.877 px -> runs\sceneflow_holdout\best.pt
+  epoch  22 step     0/225 loss 8.5347 lr 2.01e-04
+  epoch  22 step    50/225 loss 8.3193 lr 1.91e-04
+  epoch  22 step   100/225 loss 7.8787 lr 1.81e-04
+  epoch  22 step   150/225 loss 7.8453 lr 1.71e-04
+  epoch  22 step   200/225 loss 7.6746 lr 1.61e-04
+epoch  22 | loss 7.7422 | val EPE 3.859 px | D1 23.57% | 106s
+  new best EPE 3.859 px -> runs\sceneflow_holdout\best.pt
+  epoch  23 step     0/225 loss 8.8049 lr 1.57e-04
+  epoch  23 step    50/225 loss 7.2762 lr 1.47e-04
+  epoch  23 step   100/225 loss 7.2025 lr 1.38e-04
+  epoch  23 step   150/225 loss 7.1140 lr 1.29e-04
+  epoch  23 step   200/225 loss 7.3078 lr 1.21e-04
+epoch  23 | loss 7.3609 | val EPE 3.782 px | D1 23.16% | 109s
+  new best EPE 3.782 px -> runs\sceneflow_holdout\best.pt
+  epoch  24 step     0/225 loss 6.9487 lr 1.17e-04
+  epoch  24 step    50/225 loss 7.4400 lr 1.08e-04
+  epoch  24 step   100/225 loss 7.1204 lr 1.01e-04
+  epoch  24 step   150/225 loss 7.1436 lr 9.29e-05
+  epoch  24 step   200/225 loss 7.1694 lr 8.56e-05
+epoch  24 | loss 7.1458 | val EPE 3.761 px | D1 22.91% | 108s
+  new best EPE 3.761 px -> runs\sceneflow_holdout\best.pt
+  epoch  25 step     0/225 loss 5.9540 lr 8.20e-05
+  epoch  25 step    50/225 loss 6.9672 lr 7.50e-05
+  epoch  25 step   100/225 loss 7.2161 lr 6.84e-05
+  epoch  25 step   150/225 loss 7.3035 lr 6.20e-05
+  epoch  25 step   200/225 loss 7.1910 lr 5.59e-05
+epoch  25 | loss 7.1820 | val EPE 3.740 px | D1 22.69% | 75s
+  new best EPE 3.740 px -> runs\sceneflow_holdout\best.pt
+  epoch  26 step     0/225 loss 8.4932 lr 5.30e-05
+  epoch  26 step    50/225 loss 7.5933 lr 4.73e-05
+  epoch  26 step   100/225 loss 7.3552 lr 4.20e-05
+  epoch  26 step   150/225 loss 7.0969 lr 3.69e-05
+  epoch  26 step   200/225 loss 7.1138 lr 3.22e-05
+epoch  26 | loss 7.1305 | val EPE 3.697 px | D1 22.35% | 78s
+  new best EPE 3.697 px -> runs\sceneflow_holdout\best.pt
+  epoch  27 step     0/225 loss 5.0450 lr 3.00e-05
+  epoch  27 step    50/225 loss 6.8892 lr 2.57e-05
+  epoch  27 step   100/225 loss 6.8269 lr 2.18e-05
+  epoch  27 step   150/225 loss 6.7864 lr 1.82e-05
+  epoch  27 step   200/225 loss 6.8503 lr 1.49e-05
+epoch  27 | loss 6.9416 | val EPE 3.703 px | D1 22.36% | 79s
+  epoch  28 step     0/225 loss 6.9819 lr 1.34e-05
+  epoch  28 step    50/225 loss 7.4477 lr 1.06e-05
+  epoch  28 step   100/225 loss 7.2984 lr 8.08e-06
+  epoch  28 step   150/225 loss 7.1150 lr 5.93e-06
+  epoch  28 step   200/225 loss 6.9259 lr 4.11e-06
+epoch  28 | loss 6.9793 | val EPE 3.687 px | D1 22.30% | 82s
+  new best EPE 3.687 px -> runs\sceneflow_holdout\best.pt
+  epoch  29 step     0/225 loss 4.1821 lr 3.33e-06
+  epoch  29 step    50/225 loss 6.4634 lr 2.00e-06
+  epoch  29 step   100/225 loss 6.7472 lr 1.02e-06
+  epoch  29 step   150/225 loss 7.0353 lr 3.60e-07
+  epoch  29 step   200/225 loss 7.1980 lr 3.94e-08
+epoch  29 | loss 7.2281 | val EPE 3.692 px | D1 22.36% | 85s
+
+done. best val EPE 3.687 px
+reference: Hailo stereonet reports 8.223 float / 10.3 quantized on KITTI
