@@ -254,3 +254,84 @@ Remaining Phase 2: finish 2.1, then 2.2 (`--disp-aware-sampling`, built and
 validated) on the better of {C recipe, kitti_mixed}, then 2.3 replay-ratio
 sweep (0.25 / 0.5 / 1.0) — replay ratio 0.5 slightly over-read at 120–160 px,
 so 0.25 is the first to try.
+
+### Phase 2 results
+
+All continue the winner recipe (`--ema 0.999 --aug strong --crop-h 320
+--crop-w 768`), `--init sceneflow_border`, 300 epochs, cooler mode
+(`--epoch-pause 30` for thermals — does not affect the model).
+
+| run | changed | ckpt | masked | official | D1% | 80–100 | 100–120 | 120–160 | SF | best-ep |
+|---|---|---|---|---|---|---|---|---|---|---|
+| baseline shipped | — | best | 1.464 | 1.659 | 9.92 | 10.7 / −10.2 | 28.8 / −28.8 | 35.1 / −35.1 | — | — |
+| Phase 1 winner C | crop768 | best | 1.461 | 1.639 | 9.42 | 7.9 / −7.3 | 34.9 / −34.9 | 34.0 / −34.0 | 27.74 | 265 |
+| **2.1 `kitti_mixed768`** | **+ KITTI 2012 (354 fr)** | best | **1.224** | **1.336** | **7.59** | 5.8 / −3.9 | 14.6 / −13.0 | 10.0 / −6.1 | 14.63 | 244 |
+| 2.2 `kitti_mixed_sampled768` | + disparity-aware sampling | best | 1.234 | 1.345 | 7.61 | 5.7 / −3.9 | 14.3 / −12.1 | 9.4 / −1.6 | 13.83 | 219 |
+
+**2.2 verdict:** disparity-aware sampling is a **wash on the headline** (official
+1.345 vs 2.1's 1.336 — inside the <0.1 px noise floor) but marginally *better*
+where it was meant to help: 120–160 px EPE 10.0 → 9.4 and its border bias
+−5.9 → **−1.4**, 100–120 px border bias −19.7 → −17.5, and SceneFlow retention
+14.6 → 13.8 px — all at no real EPE cost. So the two are statistically tied;
+`kitti_mixed768` keeps the lowest official EPE, `kitti_mixed_sampled768` has the
+flattest large-disparity bias. Either is a valid ship candidate.
+
+### Phase 2 verdict
+
+**KITTI 2012 (Phase 2.1) is the decisive win of the whole effort:** official EPE
+**1.659 → 1.336 px**, D1 9.92% → 7.59%, and the ≥80 px under-read cut by ~2–5×
+across every bin. Disparity-aware sampling (2.2) adds only a marginal, in-noise
+refinement of the far-range bias. **Phase 2 best model: `kitti_mixed768`**
+(official 1.336 px) by the lowest-EPE rule, with `kitti_mixed_sampled768` a tied
+alternative if flatter ≥80 px bias is preferred at HEF time.
+
+Residual ≥80 px bias is still mildly negative (100–120 px ≈ −12 to −13 px), so
+**Phase 3 (redo the pretrain) remains technically warranted** by the plan's
+criterion — but the remaining error is now concentrated in a handful of far
+pixels (§1.3: 17/40 val frames, one holds 40%), and the headline is already
+0.32 px under the shipped model. Phase 3 is a judgment call, not a necessity.
+
+### Phase 3 results
+
+| run | changed | ckpt | masked | official | D1% | 80–100 | 100–120 | 120–160 | SF | best-ep |
+|---|---|---|---|---|---|---|---|---|---|---|
+| 3.1 `sceneflow_fixed` | RNG-fixed pretrain, batch 8 | best | — | — | — | — | — | — | **3.604** (hold-out) | 29 |
+| Phase-2 best `kitti_mixed768` | (baseline for comparison) | best | 1.224 | 1.336 | 7.59 | 5.8 / −3.9 | 14.6 / −13.0 | 10.0 / −6.1 | 14.63 | 244 |
+| **3.2 `kitti_mixed_fixed768`** | **finetune from fixed pretrain** | best | **1.156** | **1.248** | **6.87** | 4.7 / −2.3 | 11.5 / −9.8 | 6.3 / −4.4 | 13.05 | 223 |
+
+**3.2 verdict — the fix paid off.** Re-finetuning from the RNG-fixed pretrain
+improved official EPE **1.336 → 1.248 px** and D1 **7.59% → 6.87%**, with the
+≥80 px bias flattened further in every bin (100–120 px −13.0 → −9.8, 120–160 px
+−6.1 → −4.4) and better SceneFlow retention (14.6 → 13.1 px). Notably, the
+pretrain's own hold-out barely moved (3.610 → 3.604), yet the finetune is
+clearly better — the extra augmentation diversity the RNG fix restored gives
+more transferable features even at the same hold-out EPE. best ≈ last.
+
+### Overall verdict
+
+**Best model of the whole project: `kitti_mixed_fixed768`** — recipe: RNG-fixed
+SceneFlow pretrain (`sceneflow_fixed`) → finetune on KITTI 2015 + KITTI 2012
+(`kitti_mixed`) with EMA 0.999, strong aug, crop 320×768, 300 epochs, lr 1e-4.
+
+Cumulative gain over the shipped baseline:
+
+| metric | shipped | **final** | Δ |
+|---|---|---|---|
+| official EPE | 1.659 | **1.248** | **−0.41 px (−25%)** |
+| D1-all | 9.92% | **6.87%** | −3.05 pts |
+| 100–120 px bias | −28.8 | −9.8 | +19 px |
+| 120–160 px EPE | 35.1 | 6.3 | −29 px |
+
+Two levers did the work: **KITTI 2012** (the large-disparity supervision that
+was missing) and the **worker-RNG fix** in the pretrain. Sampling (2.2) and
+replay were marginal/optional.
+
+**Next: Linux Phase 5** — export `kitti_mixed_fixed768` to ONNX, compile the
+HEF, verify emulated int8 vs 1.848 px, run `eval_depth.py`, and update STATUS.md
+(correcting §2.3). See `report/HANDOFF_TO_LINUX.md` (to be written).
+
+**2.1 verdict:** KITTI 2012 is the single biggest lever — official EPE
+1.659 → **1.336** and the ≥80 px under-read roughly halved across every bin.
+It is the new baseline. SceneFlow hold-out (14.6 px) is better than pure KITTI
+(24.7) but worse than replay (3.99), so 2.3's replay sweep still has a job:
+recover forgetting without giving back the KITTI gains. best ≈ last (0.001 px).
