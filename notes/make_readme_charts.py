@@ -8,6 +8,7 @@ the categorical/sequential palette and mark specs from the dataviz skill
 """
 import math
 from pathlib import Path
+from math import atan2, cos, pi, sin
 
 from PIL import Image, ImageDraw, ImageFont
 
@@ -72,6 +73,24 @@ class Chart:
 
     def dot(self, x, y, d, color):
         self.d.ellipse([self.s(x), self.s(y), self.s(x + d), self.s(y + d)], fill=color)
+
+    def box(self, cx, cy, label, h=48, size=15):
+        w = self.text_w(label, size, bold=False) + 44
+        x0, y0, x1, y1 = cx - w / 2, cy - h / 2, cx + w / 2, cy + h / 2
+        self.d.rounded_rectangle([self.s(x0), self.s(y0), self.s(x1), self.s(y1)],
+                                   radius=self.s(8), fill=SURFACE, outline=BASELINE,
+                                   width=self.s(1.5))
+        self.text((cx, cy), label, size, fill=INK, anchor="mm")
+        return (x0, y0, x1, y1)
+
+    def arrow(self, p0, p1, color=INK_MUTED, width=2, head=7):
+        self.d.line([(self.s(p0[0]), self.s(p0[1])), (self.s(p1[0]), self.s(p1[1]))],
+                     fill=color, width=self.s(width))
+        ang = atan2(p1[1] - p0[1], p1[0] - p0[0])
+        left = (p1[0] - head * cos(ang - pi / 6), p1[1] - head * sin(ang - pi / 6))
+        right = (p1[0] - head * cos(ang + pi / 6), p1[1] - head * sin(ang + pi / 6))
+        self.d.polygon([(self.s(p1[0]), self.s(p1[1])), (self.s(left[0]), self.s(left[1])),
+                         (self.s(right[0]), self.s(right[1]))], fill=color)
 
     def save(self, name):
         self.img.resize((self.w, self.h), Image.LANCZOS).save(OUT / name)
@@ -259,8 +278,44 @@ def quantization_sensitivity():
     c.save("quantization_sensitivity.png")
 
 
+# ---------------------------------------------------------------------------
+# 5. Architecture pipeline -- static box-and-arrow diagram
+# ---------------------------------------------------------------------------
+def architecture_diagram():
+    c = Chart(1280, 300)
+    cy_top, cy_bot, cy_mid = 90, 220, 155
+
+    left_img = c.box(90, cy_top, "Left image")
+    right_img = c.box(90, cy_bot, "Right image")
+    fe1 = c.box(290, cy_top, "Feature extractor")
+    fe2 = c.box(290, cy_bot, "Feature extractor")
+    cv = c.box(510, cy_mid, "Cost volume")
+    sa = c.box(720, cy_mid, "Soft-argmin")
+    rf = c.box(940, cy_mid, "Refinement ladder")
+    out = c.box(1170, cy_mid, "Disparity map")
+
+    def right(box_):
+        x0, y0, x1, y1 = box_
+        return (x1, (y0 + y1) / 2)
+
+    def left(box_):
+        x0, y0, x1, y1 = box_
+        return (x0, (y0 + y1) / 2)
+
+    c.arrow(right(left_img), left(fe1))
+    c.arrow(right(right_img), left(fe2))
+    c.arrow(right(fe1), left(cv))
+    c.arrow(right(fe2), left(cv))
+    c.arrow(right(cv), left(sa))
+    c.arrow(right(sa), left(rf))
+    c.arrow(right(rf), left(out))
+
+    c.save("architecture.png")
+
+
 if __name__ == "__main__":
     headline_comparison()
     distance_band_accuracy()
     border_fix()
     quantization_sensitivity()
+    architecture_diagram()

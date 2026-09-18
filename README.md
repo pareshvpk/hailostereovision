@@ -27,16 +27,7 @@ the gap is unlikely to be an artefact.
 
 ### Architecture
 
-```mermaid
-flowchart LR
-    L[Left image] --> FE1[Feature extractor]
-    R[Right image] --> FE2[Feature extractor]
-    FE1 --> CV[Cost volume]
-    FE2 --> CV
-    CV --> SA[Soft-argmin]
-    SA --> RF[Refinement ladder]
-    RF --> OUT[Disparity map]
-```
+![Pipeline: left/right image through feature extraction, cost volume, soft-argmin, refinement, to disparity map](report/charts/architecture.png)
 
 The cost head's final **BatchNorm is load-bearing**. Remove it and the
 softmax saturates (entropy 0.007 of a possible 3.18), matching stops
