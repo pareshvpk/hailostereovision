@@ -3,6 +3,35 @@
 > Windows training (Phases 0–3) is done. This file hands the winning model to
 > an Ubuntu session for the Linux-only deployment phase. Written for Claude.
 
+## ✅ COMPLETE — 2026-09-16
+
+All five Phase 5 steps are done. Results, measured on Linux:
+
+| step | result |
+|---|---|
+| ONNX export | all audits PASS, ONNX↔torch parity **5.57e-04 px** |
+| float (reproduced on Linux) | masked **1.156 px**, official **1.248 px**, D1 6.87% — matches Windows exactly |
+| int8 emulated | masked **1.333 px**, official **1.430 px**, D1 8.00% (shipped was 1.848) |
+| HEF | **4.12 MB, 7 contexts**, compiled in 5 m 52 s |
+| depth, 0–5 m | mean \|dZ\| **1.08 → 0.45 m**, EPE 18.66 → 7.29 px |
+| STATUS.md | updated; §2.3 + open item 3 corrected; open item 6 fixed |
+
+**Two deviations from the plan below, both deliberate:**
+
+1. **The HEF is not a 0.95-utilization build.** That configuration no longer
+   completes here — three attempts of 41–88 min all stalled at context 3/5,
+   with 34 of 46 allocator failures being `shmifo in capacity exceeded
+   (available: 20, required: 39)`. Built instead with `--compiler-effort 0`
+   (automatic utilization): 7 contexts / 4.12 MB rather than 5 / 4.69 MB.
+   Smaller, but more context switches, and the FPS effect is unmeasured.
+2. **`dfc_flow.py` hardcodes the ONNX and HEF paths**, so "export under a new
+   name" was not possible as written. The shipped artefacts were copied to
+   `artifacts/shipped/` and `deploy/build/shipped/` (md5-verified) instead.
+
+Still open, both needing a Hailo-15H board: on-device validation (item 1) and
+FPS/latency (item 2 — `hailo profiler` crashes on this graph in DFC 5.4.0,
+now confirmed on the 7-context build too).
+
 The NTFS drive is at `/media/paresh/1426359D263580B2/Microchip/hailo-stereo`
 on Ubuntu (same files as `C:\Microchip\hailo-stereo` on Windows).
 

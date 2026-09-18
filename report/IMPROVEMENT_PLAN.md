@@ -135,12 +135,21 @@ Every item here means a full retrain **and** a new HEF with re-emulated int8.
 
 ### Phase 5 — ship the winner (≈45 min)
 
-- [ ] `src/export_onnx.py` — all audits PASS, parity < 1e-3 px
-- [ ] `./deploy/hailo-py deploy/dfc_flow.py all` — HEF builds at 0.95 utilization
-- [ ] Emulated int8 EPE vs 1.848 px; int8 degradation vs +13.0%
-- [ ] `src/eval_depth.py` — 0–5 m band vs 1.08 m mean |dZ|
-- [ ] Update STATUS.md: new numbers, and **correct §2.3 and open item 3**
-      (the 192 px ceiling explanation)
+- [x] `src/export_onnx.py` — all audits PASS, parity **5.57e-04 px** (< 1e-3)
+- [x] HEF built — **not** at 0.95 utilization: that configuration no longer
+      completes (3 attempts, 41–88 min, stuck at context 3/5 on shmifo
+      overflow). Built with `--compiler-effort 0` in **5 min 52 s**:
+      **4.12 MB, 7 contexts** (shipped was 4.69 MB, 5 contexts).
+- [x] Emulated int8 EPE **1.430 px official** vs 1.848 shipped (−22.7%);
+      degradation +14.5% official / +15.3% masked vs +11.4% / +13.0% shipped —
+      absolute int8 cost fell (+0.177 vs +0.190 px masked), relative rose
+      because the float baseline improved.
+- [x] `src/eval_depth.py` — 0–5 m mean |dZ| **1.08 → 0.45 m**, EPE 18.66 → 7.29 px,
+      AbsRel 28.43% → 11.30%, d<1.25 68.22% → 92.73%.
+- [x] STATUS.md updated: new numbers throughout, **§2.3 and open item 3
+      corrected** (the 192 px ceiling explanation was wrong — every 0–5 m pixel
+      has GT disparity 77–158 px; the cause was missing large-disparity
+      supervision). Open item 6 (`.alls` rationale) also fixed.
 
 ---
 

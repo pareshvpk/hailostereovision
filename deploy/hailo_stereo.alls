@@ -1,9 +1,10 @@
 # HailoStereo model script (.alls) for the Hailo Dataflow Compiler.
 #
-# UNVERIFIED SYNTAX. The DFC is Linux-only and is not installed on the machine
-# this was written on, so nothing here has been through the parser. Treat it as
-# a specification of the three decisions that matter, not as a file known to
-# load. Each decision is justified below and each is independently checkable.
+# VERIFIED 2026-09-16. This file has been through the DFC 5.4.0 parser on Linux
+# and loads. deploy/dfc_flow.py resolves the placeholder layer names below into
+# deploy/build/hailo_stereo.resolved.alls, which `optimize` then loads; the
+# current build of runs/kitti_mixed_fixed768 used exactly this script. Each of
+# the three decisions below is justified and independently checkable.
 
 # ---------------------------------------------------------------------------
 # 1. Normalization on-chip
@@ -24,9 +25,11 @@ normalization_right = normalization([123.675, 116.28, 103.53], [58.395, 57.12, 5
 # on all three checkpoints measured.
 #
 # Promoting it is necessary and NOT sufficient: the per-layer deltas sum to
-# ~0.05 px while the whole graph loses 0.36 px to int8, so ~85% of the damage is
-# cumulative. Expect this promotion to recover a fraction, and rely on the
-# compiler's equalization and bias correction for the rest.
+# ~0.05 px while the whole graph loses 0.177 px masked to int8 (measured
+# 2026-09-16), so most of the damage is cumulative. Expect this promotion to
+# recover a fraction, and rely on the compiler's quantization-aware fine-tuning
+# for the rest -- NOT equalization and bias correction, which DFC 5.4.0 skips.
+# See decision 3 below.
 #
 # The reason is structural, not statistical. Its weights are the constants
 # [0, 1, 2, ... 23] and its output IS the disparity, so int8 rounding of those
@@ -50,11 +53,21 @@ quantization_param({soft_argmin_index}, precision_mode=a16_w16)
 # ---------------------------------------------------------------------------
 # 3. Optimization level
 # ---------------------------------------------------------------------------
-# Level 2 runs equalization and bias correction. Simulated int8 costs +24.6% EPE
-# on the KITTI model with none of that modelled (uniform int8, percentile
-# calibration), so level 2 should land below that figure -- possibly well below,
-# since most of the simulated damage is cumulative and equalization targets
-# exactly that. If measured loss on device comes out
-# materially worse than 7.6%, the calibration set is the first suspect: it is
-# currently built from SceneFlow Driving, not from the deployment domain.
+# CORRECTED 2026-09-16. Level 2 on DFC 5.4.0 does NOT run equalization or bias
+# correction: the optimize log states `Bias Correction skipped` and `Adaround
+# skipped`. What it actually runs is Quantization-Aware Fine-Tuning -- gradient
+# distillation of the quantized graph against the float model, 4 epochs over the
+# 64-pair calibration set, converging to a distill loss of 0.0268. The DECISION
+# (level 2) was right; the reason previously recorded here was not.
+#
+# Measured outcome: int8 costs +0.177 px masked (+15.3%) and +0.181 px official
+# (+14.5%), against the +24.6% src/quantize_sim.py predicted -- that simulation
+# modelled uniform int8 with percentile calibration and no QFT at all, so it was
+# describing a mechanism that does not happen here. Roughly half the damage.
+#
+# The calibration set is built from KITTI (artifacts/calib_kitti_*.npy, 64 pairs
+# raw uint8 NHWC), i.e. the deployment domain -- NOT from SceneFlow Driving as
+# this comment previously claimed. If on-device loss ever comes out materially
+# worse than the emulated figure, the calibration set is no longer the first
+# suspect; compare the emulator against HailoRT on the same 40 pairs instead.
 model_optimization_flavor(optimization_level=2, compression_level=0)

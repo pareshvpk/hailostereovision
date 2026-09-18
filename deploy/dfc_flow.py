@@ -59,6 +59,13 @@ ALLS_OUT = BUILD / "hailo_stereo.resolved.alls"
 HAR_PARSED = BUILD / "hailo_stereo.har"
 HAR_OPT = BUILD / "hailo_stereo_opt.har"
 HEF = ROOT / "artifacts" / "hailo_stereo_hailo15h.hef"
+
+# Float reference for the CURRENTLY shipped checkpoint, as a 40-pair figure:
+# (EPE masked, EPE official, D1 official). Measured by src/eval_kitti.py.
+# UPDATE THIS whenever the shipped checkpoint changes -- it is only a display
+# and sanity-check baseline, but a stale value here reads as a real defect.
+# runs/kitti_mixed_fixed768/best.pt, 2026-09-16.
+TORCH_FLOAT_REF = (1.156, 1.248, 6.87)
 NAMES = BUILD / "resolved_names.json"
 
 HW_ARCH = "hailo15h"
@@ -384,13 +391,14 @@ def step_emulate(args):
 
     full = args.limit is None
     print(f"\n{'context':14s} {'EPE masked':>12s} {'EPE official':>14s} {'D1 official':>13s}")
-    # The 1.464/1.659 baseline is a 40-pair figure. Printing it next to a
+    # TORCH_FLOAT_REF is a 40-pair figure. Printing it next to a
     # --limit run invites exactly the wrong conclusion: an earlier version of
     # this script reported "+98.7% int8 cost" on 5 pairs when the true cost was
     # +5.5%, because the first 5 KITTI val scenes are harder than the split
     # average (2.757 px vs 1.463 px in float). Only show it when comparable.
     if full:
-        print(f"{'torch float':14s} {1.464:11.3f}p {1.659:13.3f}p {9.92:12.2f}%"
+        print(f"{'torch float':14s} {TORCH_FLOAT_REF[0]:11.3f}p "
+              f"{TORCH_FLOAT_REF[1]:13.3f}p {TORCH_FLOAT_REF[2]:12.2f}%"
               f"   <- 40-pair reference")
     for tag, r in results.items():
         print(f"{tag:14s} {r['masked'][0]:11.3f}p {r['official'][0]:13.3f}p "
@@ -408,10 +416,11 @@ def step_emulate(args):
               f"({100.0 * (q - f) / f:+.1f}%).")
         print(f"src/quantize_sim.py predicted +24.6% (uniform int8, percentile "
               f"calibration, no QFT modelled).")
-        if full and abs(f - 1.464) > 0.01:
-            print(f"! WARNING: the float context reads {f:.3f} px, not 1.464. "
-                  f"Suspect the normalization layers or the NHWC input layout, "
-                  f"not quantization.")
+        if full and abs(f - TORCH_FLOAT_REF[0]) > 0.01:
+            print(f"! WARNING: the float context reads {f:.3f} px, not "
+                  f"{TORCH_FLOAT_REF[0]:.3f}. Either TORCH_FLOAT_REF is stale "
+                  f"(did the checkpoint change?) or suspect the normalization "
+                  f"layers or the NHWC input layout, not quantization.")
     elif "quantized" in results:
         print("\n(no fp_optimized run: int8 cost needs both contexts)")
 
@@ -554,8 +563,12 @@ def main():
                    help="parse: QFT dataset size; the calib set has 64 pairs")
     p.add_argument("--max-util", type=float, default=0.95,
                    help="compile: resources_param max_utilization. The 60%% "
-                        "default splits into 9 contexts and overflows the "
-                        "20-shmifo limit on the cost volume")
+                        "compiler default splits into 9 contexts and overflows "
+                        "the 20-shmifo limit on the cost volume. WARNING: as of "
+                        "2026-09-16 the 0.95 setting no longer completes on this "
+                        "graph -- 3 runs of 41-88 min all stalled at context 3/5, "
+                        "34 of 46 allocator failures being shmifo overflow. Use "
+                        "--compiler-effort 0 instead (5m52s, 7 contexts, 4.12 MB)")
     p.add_argument("--no-width-split", action="store_true",
                    help="compile: disable width_splitter_defuse. Avoids the "
                         "*_sd<N> shards that crash `hailo profiler` on the "

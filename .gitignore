@@ -18,8 +18,9 @@ runs/.thermal_rest_until
 deploy/vendor/
 deploy/build/
 
-# Hailo SDK logs at repo root
+# Hailo SDK / compiler logs
 /*.log
+logs/
 
 # OS / editor cruft
 .DS_Store

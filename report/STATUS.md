@@ -17,26 +17,37 @@ and its 8.22 px KITTI EPE comes from having learned a left-to-right gradient.
 
 This project replaces it. Every design decision traces to a defect ID from that
 teardown. The replacement matches geometrically (verified by test, not by
-metric), is **3.9× cheaper in compute**, and is **5.6× more accurate** on
+metric), is **3.9× cheaper in compute**, and is **6.6× more accurate** on
 KITTI 2015 under the official protocol.
 
-As of 2026-09-10 the model **compiles cleanly to a Hailo-15H HEF** with DFC
+As of 2026-09-16 the model **compiles cleanly to a Hailo-15H HEF** with DFC
 5.4.0 — the same compiler release that produced the Model Zoo HEF, so the
 comparison measures architecture rather than a toolchain generation gap.
 
+**Allocator change, 2026-09-16.** The shipped HEF was built with an explicit
+`resources_param(max_utilization=0.95)` and came out at 4.69 MB in 5 contexts.
+That configuration no longer completes on this machine: three attempts ran
+41–88 min without finishing, grinding at context 3/5 because 34 of 46 allocator
+failures were `shmifo in capacity exceeded (available: 20, required: 39)` — the
+24-slice cost volume is expensive to place. Building instead with
+`performance_param(compiler_optimization_level=0)` (automatic utilization)
+succeeds in **5 min 52 s** and yields **4.12 MB in 7 contexts**. Smaller, but
+**not** a like-for-like artefact: more contexts means more context switching,
+and its FPS impact is unmeasured (see open item 2).
+
 | | Model Zoo `stereonet` | HailoStereo | delta |
 |---|---|---|---|
-| KITTI 2015 EPE, float | 8.223 px | **1.659 px** | **5.0× better** |
-| KITTI 2015 EPE, int8 | 10.4 px (on device) | **1.848 px** (emulated) | **5.6× better** |
-| Degradation to int8 | +25% | **+13.0%** | half the loss |
+| KITTI 2015 EPE, float | 8.223 px | **1.248 px** | **6.6× better** |
+| KITTI 2015 EPE, int8 | 10.4 px (on device) | **1.430 px** (emulated) | **7.3× better** |
+| Degradation to int8 | +25% | **+14.5%** | 1.7× less loss |
 | Compute | 112.07 GOPS | **28.41 GOPS** | 3.9× lower |
 | ONNX size | 23.69 MB | **3.38 MB** | 7.0× smaller |
-| HEF size | 8.74 MB | **4.69 MB** | 1.9× smaller |
+| HEF size | 8.74 MB | **4.12 MB** | 2.1× smaller |
 | Disparity hypotheses | 12 (all identical) | **24, all distinct** | — |
 | 3D convolutions | 5 | **0** | — |
 | Softmax width | 5,441,536 elements | **170,016** | 32× narrower |
 | Largest constant | 21.76 MB (index ramp) | **0.442 MB** | 49× smaller |
-| Parameters | 423,586 | 794,955 | 1.9× more |
+| Parameters | 423,586 | 796,531 | 1.9× more |
 | **Matching actually works** | **no** | **yes** (verified geometrically) | — |
 
 Compute is 3.9× lower with *twice* the disparity hypotheses, and the softmax is
@@ -52,8 +63,8 @@ Scored on a 40-pair scene-disjoint validation split.
 
 | protocol | EPE | D1-all |
 |---|---|---|
-| masked (matchable region only) | 1.464 px | 8.70% |
-| **official (every pixel with valid GT)** | **1.659 px** | **9.92%** |
+| masked (matchable region only) | 1.156 px | 6.38% |
+| **official (every pixel with valid GT)** | **1.248 px** | **6.87%** |
 
 The headline figure is the **official** one. The masked number is what training
 optimises; quoting it against Hailo's 8.223 px would compare different things.
@@ -97,16 +108,22 @@ EPE hides this completely: with KITTI's f·B = 386.5 px·m, one pixel of
 disparity error is **6 cm at 5 m and 6.5 m at 50 m** — a factor of 100 across
 the same frame.
 
-Measured 2026-09-11 on `runs/kitti_border/best.pt`, official protocol:
+Measured 2026-09-16 on `runs/kitti_mixed_fixed768/best.pt`, official protocol:
 
 | range | pixels | mean \|dZ\| | RMSE | median | AbsRel | d<1.25 | EPE | geom. floor | bias dZ |
 |---|---|---|---|---|---|---|---|---|---|
-| 0–5 m | 71,399 | 1.08 m | 1.94 m | 0.59 m | 28.43% | 68.22% | 18.664 px | 0.79 m | +1.06 m |
-| 5–10 m | 1,586,946 | **0.26 m** | 1.21 m | 0.11 m | **3.37%** | **98.74%** | 1.412 px | 0.22 m | +0.11 m |
-| 10–20 m | 1,463,066 | **0.70 m** | 2.01 m | 0.29 m | **4.84%** | **97.01%** | 1.278 px | 0.63 m | +0.15 m |
-| 20–40 m | 550,850 | 2.50 m | 4.49 m | 1.25 m | 8.86% | 91.27% | 1.263 px | 2.43 m | +0.38 m |
-| 40–80 m | 187,791 | 7.99 m | 11.00 m | 5.71 m | 14.48% | 76.40% | 1.413 px | 10.43 m | −5.11 m |
-| **all ≤ 80 m** | 3,860,052 | **1.14 m** | 3.31 m | 0.23 m | **5.72%** | **95.37%** | 1.659 px | 0.96 m | −0.08 m |
+| 0–5 m | 71,399 | 0.45 m | 1.52 m | 0.17 m | 11.30% | 92.73% | 7.288 px | 0.31 m | +0.35 m |
+| 5–10 m | 1,586,946 | **0.20 m** | 0.82 m | 0.10 m | **2.61%** | **99.10%** | 1.203 px | 0.18 m | +0.02 m |
+| 10–20 m | 1,463,066 | **0.58 m** | 1.78 m | 0.24 m | **4.05%** | **97.56%** | 1.074 px | 0.53 m | +0.16 m |
+| 20–40 m | 550,850 | 2.23 m | 4.29 m | 1.03 m | 7.85% | 93.14% | 1.088 px | 2.09 m | +0.62 m |
+| 40–80 m | 187,791 | 6.69 m | 9.61 m | 4.50 m | 12.23% | 84.05% | 1.159 px | 8.55 m | −3.04 m |
+| **all ≤ 80 m** | 3,860,052 | **0.96 m** | 2.94 m | 0.19 m | **4.53%** | **96.82%** | 1.248 px | 0.72 m | +0.02 m |
+
+Against the superseded `kitti_border` model (measured 2026-09-11, same pixels,
+same masks), the 0–5 m band improved on every metric: mean \|dZ\| 1.08 → 0.45 m,
+median 0.59 → 0.17 m, AbsRel 28.43% → 11.30%, d<1.25 68.22% → 92.73%, EPE
+18.664 → 7.288 px. Overall ≤ 80 m: mean \|dZ\| 1.14 → 0.96 m, AbsRel 5.72% →
+4.53%, d<1.25 95.37% → 96.82%.
 
 **How to read it.** "Geom. floor" is Z̄²/(f·B) × EPE — the metre error that
 band's own pixel error implies to first order. Measured error *at* the floor is
@@ -115,21 +132,28 @@ it. Measured error *above* the floor means the model is losing something extra.
 
 Findings:
 
-- **5–40 m is at the geometric floor** (0.26 vs 0.22, 0.70 vs 0.63, 2.50 vs
-  2.43). The model is not the limiting factor in the band that matters most for
-  driving; the sensor geometry is. 95%+ of pixels land within 25% of true
+- **5–40 m is at the geometric floor** (0.20 vs 0.18, 0.58 vs 0.53, 2.23 vs
+  2.09). The model is not the limiting factor in the band that matters most for
+  driving; the sensor geometry is. 93%+ of pixels land within 25% of true
   distance out to 40 m.
-- **0–5 m is the one genuine model defect.** EPE 18.66 px against ~1.3 px
-  everywhere else, with a bias of −18.29 px — the model systematically
-  **under-reads disparity at very close range**, reporting near objects as
-  farther than they are. Only 71k pixels (1.8%), because KITTI LiDAR rarely
-  returns that close, but it is the safety-relevant band. Cause: 24 hypotheses
-  × 8 px tops out at 192 px disparity, and under 5 m true disparity exceeds
-  that — the model cannot represent it.
-- **40–80 m measures *below* its floor** (7.99 vs 10.43). Not an error: the
+- **0–5 m is improved but still the weakest band.** EPE 7.29 px against ~1.1 px
+  everywhere else, with a bias of −5.01 px — the model still **under-reads
+  disparity at very close range**, reporting near objects as farther than they
+  are, but far less than the superseded `kitti_border` model (18.66 px, bias
+  −18.29 px). Measured 0.45 m against a 0.31 m floor, so residual model error
+  remains on top of geometry. Only 71k pixels (1.8%), because KITTI LiDAR
+  rarely returns that close, but it is the safety-relevant band.
+  **Cause (corrected 2026-09-16):** *not* the 192 px disparity ceiling. Every
+  0–5 m pixel in this split has GT disparity 77–158 px — comfortably inside the
+  24 × 8 = 192 px range, so the ceiling was never binding. The real cause was
+  missing large-disparity supervision: KITTI 2015 has only 1.0% of GT pixels
+  ≥ 80 px, and the model never learned the range. Fixed by adding KITTI 2012
+  (354 training pairs) and a per-worker RNG fix in the SceneFlow pretrain.
+  See `report/IMPROVEMENT_PLAN.md` §1.1–1.2 for the evidence.
+- **40–80 m measures *below* its floor** (6.69 vs 8.55). Not an error: the
   floor is an unbiased-error reference, not a bound. Z = f·B/d is convex, so
   over-reading disparity costs fewer metres than under-reading it by the same
-  pixels, and this band over-reads (+0.98 px).
+  pixels, and this band over-reads (+0.62 px).
 - **Calibration caveat.** f = 715.7 px and B = 0.54 m are *nominal*, not read
   from KITTI calib files (none ship in `data_scene_flow.zip`). Prediction and
   GT pass through identical constants, so **AbsRel and d<1.25 are
@@ -177,10 +201,10 @@ All figures produced on this machine on 2026-09-10 with **DFC 5.4.0**, via
 
 | context | EPE masked | EPE official | D1 official |
 |---|---|---|---|
-| torch float (reference) | 1.464 px | 1.659 px | 9.92% |
-| `SDK_NATIVE` | **1.464 px** | **1.659 px** | **9.92%** |
-| `SDK_FP_OPTIMIZED` | **1.464 px** | **1.659 px** | **9.92%** |
-| `SDK_QUANTIZED` | 1.654 px | 1.848 px | 11.92% |
+| torch float (reference) | 1.156 px | 1.248 px | 6.87% |
+| `SDK_NATIVE` | **1.156 px** | **1.248 px** | **6.87%** |
+| `SDK_FP_OPTIMIZED` | **1.156 px** | **1.248 px** | **6.87%** |
+| `SDK_QUANTIZED` | 1.333 px | 1.430 px | 8.00% |
 
 **Both float contexts reproduce PyTorch exactly.** That is the result that most
 easily could have been silently wrong — it proves the ONNX translation, the
@@ -189,20 +213,23 @@ on-chip `normalization` layers and the NHWC input layout are all correct.
 the post-model-script graph on raw uint8. They agree to three decimals, so
 normalization moved on-chip without changing the arithmetic.
 
-**int8 costs +0.190 px masked — +13.0%**, against the **+24.6%** that
-`src/quantize_sim.py` predicted.
+**int8 costs +0.177 px masked — +15.3%** (official: +0.181 px, +14.5%), against
+the **+24.6%** that `src/quantize_sim.py` predicted.
 
 The simulation was not badly built; it modelled a mechanism that no longer
 happens. It assumed uniform int8 with percentile calibration, recovered by
 equalization and bias correction. DFC 5.4.0 at `optimization_level=2` logs
 `Bias Correction skipped` / `Adaround skipped` and runs **Quantization-Aware
 Fine-Tuning** instead — gradient distillation against the float model,
-converging to a distill loss of 0.0385. Different mechanism, roughly half the
+converging to a distill loss of 0.0268. Different mechanism, roughly half the
 damage.
 
 For comparison, the original degrades **+2.08 px** (8.223 → 10.4); this model
-degrades **+0.19 px** (1.464 → 1.654). Both the relative and the absolute
-figure are better, against a baseline already 5.6× stronger.
+degrades **+0.18 px** (1.156 → 1.333). Both the relative and the absolute
+figure are better, against a baseline already 6.6× stronger. Note the *relative*
+int8 cost rose against the superseded model (+15.3% vs +13.0% masked) while the
+*absolute* cost fell (+0.177 vs +0.190 px): quantization did not get worse, the
+float baseline it is measured against got better.
 
 ### 3.2 Quantization sensitivity (simulation, still the usable ranking)
 
@@ -228,9 +255,14 @@ closed most of it instead.)
 
 ### 3.3 Compilation
 
-`artifacts/hailo_stereo_hailo15h.hef` — **4.69 MB, 5 contexts, 13 m 15 s**,
-sha256 `72895ed3…062189f4`. `deploy/build/hailo_stereo_hailo15h.WORKING.hef` is
-a byte-identical backup.
+`artifacts/hailo_stereo_hailo15h.hef` — **4.12 MB, 7 contexts, 5 m 52 s**,
+sha256 `6a8e8f8b…0cee3396`, built 2026-09-16 from `runs/kitti_mixed_fixed768`
+with `--compiler-effort 0`.
+
+The superseded 0.95-utilization build — **4.69 MB, 5 contexts, 13 m 15 s**,
+sha256 `72895ed3…062189f4` — is preserved at
+`artifacts/shipped/hailo_stereo_hailo15h.hef`, with a byte-identical copy at
+`deploy/build/hailo_stereo_hailo15h.WORKING.hef` (both re-verified 2026-09-16).
 
 The default 60% utilization **does not compile**:
 
@@ -244,8 +276,14 @@ context hailo_stereo_context_6 shmifo in capacity exceeded
 splitter produced nine contexts with the cost volume straddling a boundary.
 shmifos are the inter-context streams: 24 shifted slices feeding one concat
 means 24 edges crossing a hard limit of 20.
-`resources_param(max_utilization=0.95)` packs five denser contexts and keeps the
-cost volume intact.
+`resources_param(max_utilization=0.95)` packed five denser contexts and kept the
+cost volume intact — that is how the superseded HEF was built, and it is why the
+setting was chosen. **As of 2026-09-16 that configuration no longer completes**
+on this graph: three runs of 41–88 min all stalled at context 3/5, with 34 of 46
+allocator failures being `shmifo in capacity exceeded (available: 20,
+required: 39)`. The current HEF is built with
+`performance_param(compiler_optimization_level=0)`, which hands utilization to
+the compiler and lands on seven contexts instead. See §1 "Allocator change".
 
 **This is the teardown's own prediction arriving on hardware.** The cost volume
 is ~0.0% of the MAC budget and pure memory traffic; the README predicted "MAC
@@ -311,12 +349,12 @@ This is the same class of defect as NUM-1 in the original — an unscaled softma
 
 | # | item | severity | notes |
 |---|---|---|---|
-| 1 | **No on-device validation** | **high** | No Hailo PCIe/M.2 card and no `hailort` on this machine. 1.848 px is *emulated*; Hailo's 10.4 px is *on-device*. The emulator is bit-accurate by design, but that equivalence is unconfirmed here. Needs the HEF copied to a 15H board. |
-| 2 | **FPS / latency unmeasured** | **high** | `hailo profiler` crashes on this HEF — see below. The 16.7 FPS target is unmeasured and not measurable with this toolchain. |
-| 3 | Close-range (0–5 m) accuracy | medium | EPE 18.66 px, bias −18.29 px. 192 px disparity ceiling cannot represent sub-5 m depth. Needs more hypotheses or a coarser base step if that band matters. |
+| 1 | **No on-device validation** | **high** | No Hailo PCIe/M.2 card and no `hailort` on this machine. 1.430 px is *emulated*; Hailo's 10.4 px is *on-device*. The emulator is bit-accurate by design, but that equivalence is unconfirmed here. Needs the HEF copied to a 15H board. |
+| 2 | **FPS / latency unmeasured** | **high** | `hailo profiler` crashes on this HEF — see below. Retried 2026-09-16 on the new 7-context `--compiler-effort 0` build: **same crash**, so automatic utilization still spatially defuses shards. The 16.7 FPS target is unmeasured and not measurable with this toolchain. |
+| 3 | Close-range (0–5 m) accuracy | low | EPE 7.29 px, bias −5.01 px (was 18.66 / −18.29 on `kitti_border`). **The 192 px ceiling explanation was wrong** — every 0–5 m pixel has GT disparity 77–158 px, inside the range; the cause was missing large-disparity supervision (§2.3). Largely addressed by KITTI 2012 + the pretrain RNG fix. Residual error is small and concentrated in a few frames. |
 | 4 | Above-horizon drift | medium | Unsupervised (no LiDAR GT in sky) and unscored by either protocol. Model reports sky as near. Cosmetic for metrics, not for a consumer of the depth map. |
 | 5 | KITTI registration | low | Data came from the public S3 bucket the authors serve — same bytes, but the licence acknowledgment is outstanding. KITTI 2015 is **CC BY-NC-SA, non-commercial only**. |
-| 6 | `.alls` rationale is stale | low | Its justification for `optimization_level=2` ("runs equalization and bias correction") is wrong on DFC 5.4.0, which runs QAT instead. The *decision* was right; the *reason* recorded is not. |
+| 6 | ~~`.alls` rationale is stale~~ | **fixed 2026-09-16** | Was: justified `optimization_level=2` as "runs equalization and bias correction", which DFC 5.4.0 skips in favour of QAT. Corrected in `deploy/hailo_stereo.alls`, along with two further stale claims found in the same file — the "UNVERIFIED SYNTAX / DFC not installed" header (it parses and loads here), and the claim that the calibration set comes from SceneFlow Driving (it is built from KITTI, `artifacts/calib_kitti_*.npy`). |
 
 ### On item 2 — the profiler bug
 
@@ -334,7 +372,7 @@ output shape against the *unsplit* element-wise add of its residual block and
 raises. **This is a reporting bug in DFC 5.4.0, not a defect in the compiled
 model** — allocation, kernel compilation and the HEF all succeed.
 
-Three workarounds were tried; none works:
+Four workarounds have been tried; none works:
 
 - Profiling `hailo_stereo_opt.har` (pre-allocation) succeeds but reports
   `Mapped graph data is missing` for anything allocation-dependent → no FPS.
@@ -344,6 +382,11 @@ Three workarounds were tried; none works:
   does the opposite: **146 shards instead of 97**, conv78 split 12 ways, a
   40 m 32 s compile instead of 13 m 15 s, a 5.80 MB HEF instead of 4.69 MB —
   and the same crash.
+- `performance_param(compiler_optimization_level=0)` (2026-09-16), which hands
+  utilization to the compiler and yields a different allocation entirely —
+  7 contexts, 4.12 MB, compiled in 5 m 52 s. **Same crash**, on the same
+  `conv78_sd0` shape mismatch. Spatial defusing is not a consequence of the
+  0.95 utilization setting; this graph gets defused however it is allocated.
 
 That last result closes the search: utilization cannot be lowered to avoid the
 split (0.60 fails to allocate at all, 0.80 splits *more*) and cannot
@@ -360,13 +403,17 @@ a DFC release that fixes the estimator.
    else in the project is. Copy `artifacts/hailo_stereo_hailo15h.hef`, run
    HailoRT, and the two remaining headline claims (int8 EPE, FPS) become
    measured rather than emulated.
-2. **Decide whether 0–5 m matters.** If the application reads depth inside 5 m,
-   the 192 px disparity ceiling is the binding constraint and the fix is
-   architectural (more hypotheses, or a non-uniform disparity ladder), not more
-   training.
-3. **Fix the `.alls` comment** to describe QAT rather than
-   equalization/bias-correction, so the next reader is not misled about why
-   level 2 was chosen.
+2. **Decide whether 0–5 m matters.** The band is now 7.29 px EPE / 11.30%
+   AbsRel / 92.73% within 25% (was 18.66 px / 28.43% / 68.22%). The earlier
+   diagnosis here was wrong: the 192 px ceiling was never the binding
+   constraint (§2.3). Further gains would come from more large-disparity
+   supervision — more KITTI 2012-like data, or disparity-aware sampling — not
+   from architecture.
+3. ~~**Fix the `.alls` comment**~~ — **done 2026-09-16.** It now describes QAT
+   rather than equalization/bias-correction, records the measured +15.3% int8
+   cost against the simulation's +24.6%, and corrects two further stale claims
+   in the same file (the "UNVERIFIED SYNTAX" header and the SceneFlow
+   calibration-set attribution).
 4. **Complete the KITTI registration** before any non-research use, and note
    the CC BY-NC-SA constraint in whatever ships.
 5. *(optional)* Supervise or mask the above-horizon region so the depth map is
@@ -381,7 +428,7 @@ a DFC release that fixes the estimator.
 | Host | Ubuntu 22.04, x86_64, Python 3.10, RTX 4060 (8 GB), 23 GB RAM |
 | Training | torch 2.3.0+cu121 (system), numpy pinned < 2.0 (torch 2.3 is built against the 1.x ABI) |
 | Compiler | Hailo Dataflow Compiler **5.4.0** (2026-08-16), `--hw-arch hailo15h` |
-| Datasets | SceneFlow Driving (4,400 pairs, 3.1 GB) + KITTI 2015 (~2 GB) |
+| Datasets | SceneFlow Driving (4,400 pairs, 3.1 GB) + KITTI 2015 (~2 GB) + KITTI 2012 (194 pairs, 2.01 GB) — the shipped model finetunes on KITTI 2015 + 2012 combined (354 train pairs, `--dataset kitti_mixed`) |
 | Gotcha | A ROS Humble `PYTHONPATH` sorts ahead of any venv's `site-packages` and breaks the DFC's pinned numpy/protobuf/tensorflow. Use the `deploy/hailo-py` wrapper, not a manual `activate`. |
 
 Training draws ~100 W against a ~52 Wh battery and a ~65 W adapter, so the
@@ -399,18 +446,25 @@ PY=~/.venvs/stereo/bin/python
 
 $PY src/test_disparity.py                                   # 6/6 geometry tests
 $PY src/check_ingest.py --dataset kitti --root data/kitti2015/training
-$PY src/eval_kitti.py  --ckpt runs/kitti_border/best.pt --root data/kitti2015/training
-$PY src/eval_depth.py  --ckpt runs/kitti_border/best.pt --root data/kitti2015/training
-$PY src/preview.py     --ckpt runs/kitti_border/best.pt --dataset kitti \
+$PY src/eval_kitti.py  --ckpt runs/kitti_mixed_fixed768/best.pt --root data/kitti2015/training --bins
+$PY src/eval_depth.py  --ckpt runs/kitti_mixed_fixed768/best.pt --root data/kitti2015/training
+$PY src/preview.py     --ckpt runs/kitti_mixed_fixed768/best.pt --dataset kitti \
                        --root data/kitti2015/training --n 4 --out artifacts/preview_kitti.png
-$PY src/export_onnx.py --ckpt runs/kitti_border/best.pt   # 6 audits + parity
-$PY src/quantize_sim.py --ckpt runs/kitti_border/best.pt --dataset kitti \
+$PY src/export_onnx.py --ckpt runs/kitti_mixed_fixed768/best.pt   # 6 audits + parity
+$PY src/quantize_sim.py --ckpt runs/kitti_mixed_fixed768/best.pt --dataset kitti \
                         --root data/kitti2015/training --val-limit 40 --calib 24
 
-./deploy/hailo-py deploy/dfc_flow.py all                    # parse→optimize→emulate→compile
+./deploy/hailo-py deploy/dfc_flow.py parse                  # -> build/hailo_stereo.har
+./deploy/hailo-py deploy/dfc_flow.py optimize               # QFT, ~6 min
+./deploy/hailo-py deploy/dfc_flow.py emulate                # fp_optimized + quantized
+./deploy/hailo-py deploy/dfc_flow.py emulate --contexts native
+./deploy/hailo-py deploy/dfc_flow.py compile --compiler-effort 0   # 5m52s -> 4.12 MB
+# NOT `dfc_flow.py all`, and NOT bare `compile`: both use --max-util 0.95, which
+# no longer completes on this graph (hours, stuck at context 3/5 on shmifo
+# overflow). See §1 "Allocator change" and open item 2.
 ```
 
-Interactive inspection: `$PY src/demo_server.py --ckpt runs/kitti_border/best.pt`
+Interactive inspection: `$PY src/demo_server.py --ckpt runs/kitti_mixed_fixed768/best.pt`
 then <http://localhost:8000>. Thirteen panels, stage by stage. The four
 `P(disparity = 0 / 64 / 128 / 184 px)` panels are the point — in the model this
 replaces, all twelve hypotheses were bit-identical, so those panels would have
@@ -427,6 +481,7 @@ src/data.py            SceneFlow + KITTI 2015 loaders, masked validity
 src/train.py           deep supervision, masked loss, strict --init
 src/eval_kitti.py      accuracy under both protocols
 src/eval_depth.py      accuracy in metres, banded by range   [new 2026-09-11]
+src/eval_sceneflow.py  SceneFlow hold-out EPE (forgetting metric) [new 2026-09-14]
 src/export_onnx.py     ONNX export + defect audit + parity check
 src/quantize_sim.py    int8 simulation and per-layer sensitivity
 src/preview.py         predictions beside ground truth, shared colour scale
@@ -437,7 +492,11 @@ deploy/hailo-py        PYTHONPATH-sanitising wrapper
 report/teardown.html   reverse-engineering report on the original
 notes/                 the analysis scripts behind the teardown
 artifacts/hailo_stereo.onnx                3.38 MB, opset 14, 347 nodes
-artifacts/hailo_stereo_hailo15h.hef        4.69 MB, 5 contexts  <- the deliverable
+artifacts/hailo_stereo_hailo15h.hef        4.12 MB, 7 contexts  <- the deliverable
+artifacts/shipped/                         pre-2026-09-16 HEF + ONNX (kitti_border)
 artifacts/stereonet_hailo15h_v5.4.0.hef    8.74 MB, the model being replaced
-runs/kitti_border/best.pt                  the shipped checkpoint
+runs/kitti_mixed_fixed768/best.pt          the shipped checkpoint  <- KITTI 2015 + 2012 finetune
+runs/sceneflow_fixed/best.pt               its SceneFlow pretrain (per-worker RNG fixed)
+runs/kitti_border/best.pt                  superseded 2026-09-16 (official 1.659 px)
+data/kitti2012/training                    KITTI 2012, 194 pairs   [new 2026-09-14]
 ```
