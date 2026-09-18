@@ -31,11 +31,11 @@ the gap is unlikely to be an artefact.
 flowchart LR
     L[Left image] --> FE1[Feature extractor]
     R[Right image] --> FE2[Feature extractor]
-    FE1 --> CV["Cost volume<br/>24 shifted slices, BatchNorm-anchored"]
+    FE1 --> CV[Cost volume]
     FE2 --> CV
-    CV --> SA["Soft-argmin<br/>170k-wide softmax"]
-    SA --> RF["Refinement ladder<br/>1/8 → 1/4 → 1/2 → 1/1"]
-    RF --> OUT["Disparity map<br/>clamped 0–192 px"]
+    CV --> SA[Soft-argmin]
+    SA --> RF[Refinement ladder]
+    RF --> OUT[Disparity map]
 ```
 
 The cost head's final **BatchNorm is load-bearing**. Remove it and the
